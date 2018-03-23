@@ -16,35 +16,19 @@ jobs:
             - yarn-v1-{{ checksum "yarn.lock" }}
             - yarn-v1-
       - run:
-          name: Check
+          name: Install NPM modules
           command: |
-            pwd
-      - run:
-          name: List
-          command: |
-            ls
+            yarn install
+            yarn add firebase-tools --dev
       - save_cache:
           key: yarn-v1-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn/v1
-      # - restore_cache:
-      #     keys:
-      #       - yarn-v1-{{ checksum "yarn.lock" }}
-      #       - yarn-v1-
-      # - run:
-      #     name: Install NPM modules
-      #     command: |
-      #       yarn install
-      #       yarn add firebase-tools --dev
-      # - save_cache:
-      #     key: yarn-v1-{{ checksum "yarn.lock" }}
-      #     paths:
-      #       - ~/.cache/yarn/v1
-      # - run:
-      #     name: Build
-      #     command: |
-      #       yarn relay
-      #       yarn build
+      - run:
+          name: Build
+          command: |
+            yarn relay
+            yarn build
       # - run:
       #     name: Test
       #     command: |
