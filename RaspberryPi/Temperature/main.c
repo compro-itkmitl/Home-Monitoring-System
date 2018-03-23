@@ -1,11 +1,9 @@
-#include <iostream>
+#include <stdio.h>
 
 #include <unistd.h>
 
 #include "common_dht_read.h"
 #include "GPIO/pi_dht_read.h"
-
-using namespace std;
 
 int main(int argc, char** argv) {
 	int pin = 18;
@@ -39,7 +37,7 @@ int main(int argc, char** argv) {
 			if (errors > 10) {
 				// let the user know thier situation
 
-				cout << "We really fucked up" << endl;
+				printf("We really fucked up");
 			}
 
 			errors += 1;
@@ -47,9 +45,8 @@ int main(int argc, char** argv) {
 
 
 		if (errors < 9) {
-			cout << "temp " << temperature << " humid " << humidity << endl;
+			printf("Temp %f Humid %f", temperature, humidity);
 		}
-
 
 		usleep(5e2 * 1e3);
 	}
