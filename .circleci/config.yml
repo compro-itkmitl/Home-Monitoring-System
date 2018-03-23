@@ -11,6 +11,10 @@ jobs:
     steps:
       - checkout
           path: ~/repo
+      - restore_cache:
+          keys:
+            - yarn-v1-{{ checksum "yarn.lock" }}
+            - yarn-v1-
       - run:
           name: Check
           command: |
@@ -19,6 +23,10 @@ jobs:
           name: List
           command: |
             ls
+      - save_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn/v1
       # - restore_cache:
       #     keys:
       #       - yarn-v1-{{ checksum "yarn.lock" }}
