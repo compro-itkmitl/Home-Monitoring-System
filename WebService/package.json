@@ -1,5 +1,6 @@
 {
   "name": "compro60",
+  "homepage" : "https://iot.wiput.me",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
