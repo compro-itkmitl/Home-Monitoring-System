@@ -4,10 +4,10 @@ jobs:
   build:
     docker:
       - image: node:8-alpine
-    - working_directory: ~/repo/WebService
     steps:
       - checkout
           path: ~/repo
+      - working_directory: ~/repo/WebService
       - run:
           name: Check
           command: |
