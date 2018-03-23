@@ -27,7 +27,6 @@ jobs:
       - run:
           name: Build
           command: |
-            yarn relay
             yarn build
       # - run:
       #     name: Test
