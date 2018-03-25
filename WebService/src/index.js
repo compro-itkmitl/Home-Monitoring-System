@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import './components/css/index.css';
+import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import Header from './components/Header';
 
-ReactDOM.render((<App />), document.getElementById('app'));
+ReactDOM.render(<Header />, document.getElementById('header'));
+ReactDOM.render(<App />, document.getElementById('root'));
+
 registerServiceWorker();
