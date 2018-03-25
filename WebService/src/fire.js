@@ -8,5 +8,5 @@ var config = {
 	    storageBucket: "compro-home-monitoring.appspot.com",
 	    messagingSenderId: "737172287320"
 	  };
-var fire = firebase.initializeApp(config);
+firebase.initializeApp(config);
 export default fire;

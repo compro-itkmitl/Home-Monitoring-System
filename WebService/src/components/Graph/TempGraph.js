@@ -13,6 +13,7 @@ let data = {
             data: [
                 24, 25, 26, 27, 26, 25, 26, 25
             ],
+            borderColor: "#009688",
             fill: false
         },
     ]
@@ -21,8 +22,7 @@ let data = {
 const options = {
     responsive: true,
     title: {
-        display: true,
-        text: "Temperature monitor"
+        display: false
     },
     hover: {
         mode: "dataset"

@@ -13,6 +13,7 @@ let data = {
             data: [
                 59, 60, 62, 68, 62, 70, 65, 66
             ],
+            borderColor: "#00BCD4",
             fill: false
         },
     ]
@@ -21,8 +22,7 @@ let data = {
 const options = {
     responsive: true,
     title: {
-        display: true,
-        text: "Humidity monitor"
+        display: false
     },
     hover: {
         mode: "dataset"
