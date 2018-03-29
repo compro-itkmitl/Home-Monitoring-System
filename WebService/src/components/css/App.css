@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css?family=Mitr:300,400&subset=thai');
+
+body {
+  font-family: 'Mitr', sans-serif;
+  overflow-x: hidden;
+}
+
+p {
+  font-weight: 300;
+}
+
+
+/* NAV */
+
+
+.navbar {
+  padding: 0.5em 5em;
+  background: #607D8B;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #FFF;
+}
+
+.main-logo {
+  width: 60px;
+}
+
+.navbar-light .navbar-toggler {
+  background: #FFF;
+}
+
+
+/* SECTION */
+
+main {
+  padding: 2em 0;
+}
+
+.text-center {
+  text-align: center;
+  padding: 2em 0;
+}
+
+.hero {
+  background: #90A4AE;
+  color: #FFF;
+}
+
+.dashboard {
+  padding: 2em 6em;
+}
+
+@media screen and (max-width:768px) {
+  .dashboard {
+    padding: 1em 2em;
+  }
+}
+
+/* DASHBOARD */
+.temp {    
+  border: 1px solid #009688;
+}
+.temp h3 {
+  background: #009688;
+  color: #FFF;
+  padding: 0.5em 0.5em;
+}
+.humid {
+  border: 1px solid #00BCD4;
+}
+.humid h3 {
+  background: #00BCD4;
+  color: #FFF;
+  padding: 0.5em 0.5em;
+}
+
+.dashboard > div {
+  padding: 0;
+
+}
+
+/* ABOUT US */
+
+.our-project, .members {
+  padding-bottom: 3em; 
+}
+.members div {
+  text-align: center;
+}
+
+.members img {
+  width: 200px;
+  border-radius: 50%;
+}
+
+.members p {
+  padding-top: 0.5em;
+}
