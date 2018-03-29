@@ -4,20 +4,16 @@ import OurProject from './OurProject';
 import OurTeam from './OurTeam';
 
 class AboutUs extends Component {
-
   render() {
     return (
-      
       <BrowserRouter>
-      <div>
-        <OurProject />
-        <OurTeam />
-      </div>
+        <div>
+          <OurProject />
+          <OurTeam />
+        </div>
       </BrowserRouter>
-     
-    )
+    );
   }
-
 }
 
 export default AboutUs;
