@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
 	}
 	// PIR
 	else {
-
+		read_pir();
 	}
 
 	return 0;
