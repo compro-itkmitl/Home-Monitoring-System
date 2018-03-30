@@ -3,17 +3,21 @@
 #include <unistd.h>
 
 #include "GPIO/common_dht_read.h"
+#include "GPIO/pi_mmio.h"
 #include "GPIO/pi_dht_read.h"
 
 void read_temp(void);
+void read_pir(void);
 
 int main(int argc, char** argv) {
 
 	int process = fork();
 
+	// Temp read
 	if (process == 0) {
 		read_temp();
 	}
+	// PIR
 	else {
 
 	}
@@ -53,4 +57,9 @@ void read_temp(void) {
 		}
 		usleep(5e2 * 1e3);
 	}
+}
+
+void read_pir(void) {
+	pi_mmio_set_input(25);
+	prinf("%d\n", pi_mmio_input(25));
 }
