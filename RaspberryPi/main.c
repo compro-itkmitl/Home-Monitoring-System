@@ -1,9 +1,9 @@
 #include <stdio.h>
-
 #include <unistd.h>
 
+#include <wiringPi.h>
+
 #include "GPIO/common_dht_read.h"
-#include "GPIO/pi_mmio.h"
 #include "GPIO/pi_dht_read.h"
 
 void read_temp(void);
@@ -47,7 +47,7 @@ void read_temp(void) {
 			// we're really fucked up now
 			if (errors > 10) {
 				// let the user know thier situation
-				printf("We really fucked up\n");
+				printf("Read failed!\n");
 			}
 			errors += 1;
 		}
@@ -60,6 +60,17 @@ void read_temp(void) {
 }
 
 void read_pir(void) {
-	pi_mmio_set_input(25);
-	printf("%d\n", pi_mmio_input(25));
+
+	if(wiringPiSetup() == -1) return 1;
+	
+	pinMode(25, INPUT);
+	
+	delay(2000);
+	
+	while (1) {
+		if(digitalRead(25)) {
+			printf("Detected!\n");
+			while(digitalRead(25));
+		}
+	}
 }
