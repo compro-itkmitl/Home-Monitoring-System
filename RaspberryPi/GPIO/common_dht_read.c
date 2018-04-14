@@ -6,7 +6,8 @@
 
 #include "common_dht_read.h"
 
-void busy_wait_milliseconds(uint32_t millis) {
+void busy_wait_milliseconds(uint32_t millis)
+{
 
   // Set delay time period.
   struct timeval deltatime;
@@ -20,20 +21,24 @@ void busy_wait_milliseconds(uint32_t millis) {
   timeradd(&walltime, &deltatime, &endtime);
 
   // Tight loop to waste time (and CPU) until enough time as elapsed.
-  while (timercmp(&walltime, &endtime, <)) {
+  while (timercmp(&walltime, &endtime, <))
+  {
     gettimeofday(&walltime, NULL);
   }
 }
 
-void sleep_milliseconds(uint32_t millis) {
+void sleep_milliseconds(uint32_t millis)
+{
 
   struct timespec sleep;
   sleep.tv_sec = millis / 1000;
   sleep.tv_nsec = (millis % 1000) * 1000000L;
-  while (clock_nanosleep(CLOCK_MONOTONIC, 0, &sleep, &sleep) && errno == EINTR);
+  while (clock_nanosleep(CLOCK_MONOTONIC, 0, &sleep, &sleep) && errno == EINTR)
+    ;
 }
 
-void set_max_priority(void) {
+void set_max_priority(void)
+{
 
   struct sched_param sched;
   memset(&sched, 0, sizeof(sched));
@@ -43,7 +48,8 @@ void set_max_priority(void) {
   sched_setscheduler(0, SCHED_FIFO, &sched);
 }
 
-void set_default_priority(void) {
+void set_default_priority(void)
+{
 
   struct sched_param sched;
   memset(&sched, 0, sizeof(sched));

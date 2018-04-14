@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-int pi_dht_read(int sensor, int pin, float* humidity, float* temperature);
+int pi_dht_read(int sensor, int pin, float *humidity, float *temperature);
 
 #ifdef __cplusplus
 }
