@@ -9,7 +9,7 @@
 #include "GPIO/pi_dht_read.h"
 
 void read_temp(void);
-void read_pir(void);
+int read_pir(void);
 
 int main(int argc, char **argv)
 {
@@ -70,7 +70,7 @@ void read_temp(void)
 	}
 }
 
-void read_pir(void)
+int read_pir(void)
 {
 
 	FILE *fp;
@@ -90,8 +90,6 @@ void read_pir(void)
 
 			fp = popen("raspistill -o -", "r");
 
-			while (digitalRead(25))
-				;
 			if (fp == NULL)
 			{
 				printf("Process 2 : Failed to run command\n");
@@ -101,6 +99,8 @@ void read_pir(void)
 				printf("Process 2 : Command successfully run\n");
 			}
 			pclose(fp);
+			while (digitalRead(25))
+				;
 		}
 		delay(2500);
 	}
