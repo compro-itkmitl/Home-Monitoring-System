@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <curl/curl.h>
 
@@ -56,14 +57,14 @@ void read_temp(void)
 			if (errors > 10)
 			{
 				// let the user know thier situation
-				printf("Read failed!\n");
+				printf("Process 1 : Read failed!\n");
 			}
 			errors += 1;
 		}
 
 		if (errors < 9)
 		{
-			printf("Temp %f Humid %f\n", temperature, humidity);
+			printf("Process 1 : Temp %f Humid %f\n", temperature, humidity);
 		}
 		usleep(5e2 * 1e3);
 	}
@@ -71,6 +72,8 @@ void read_temp(void)
 
 void read_pir(void)
 {
+
+	FILE *fp;
 
 	if (wiringPiSetup() == -1)
 		return 1;
@@ -83,9 +86,21 @@ void read_pir(void)
 	{
 		if (digitalRead(25))
 		{
-			printf("Detected!\n");
+			printf("Process 2 : Detected!\n");
+
+			fp = popen("raspistill -o -", "r");
+
 			while (digitalRead(25))
 				;
+			if (fp == NULL)
+			{
+				printf("Process 2 : Failed to run command\n");
+			}
+			else
+			{
+				printf("Process 2 : Command successfully run\n");
+			}
+			pclose(fp);
 		}
 		delay(2500);
 	}
