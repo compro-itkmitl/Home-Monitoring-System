@@ -72,8 +72,17 @@ void read_temp(void)
 
 int read_pir(void)
 {
-
 	FILE *fp;
+
+	CURL *curl;
+	CURLcode res;
+
+	curl_mime *form = NULL;
+	curl_mimepart *field = NULL;
+	struct curl_slist *headerlist = NULL;
+	static const char buf[] = "Expect:";
+
+	curl_global_init(CURL_GLOBAL_ALL);
 
 	if (wiringPiSetup() == -1)
 		return 1;
@@ -81,6 +90,8 @@ int read_pir(void)
 	pinMode(25, INPUT);
 
 	delay(2000);
+
+	printf("Process 2 : Process initialized!\n");
 
 	while (1)
 	{
@@ -92,11 +103,46 @@ int read_pir(void)
 
 			if (fp == NULL)
 			{
-				printf("Process 2 : Failed to run command\n");
+				printf("Process 2 : Failed to run photo capture command\n");
 			}
 			else
 			{
-				printf("Process 2 : Command successfully run\n");
+				printf("Process 2 : Command has started\n");
+
+				curl = curl_easy_init();
+				if (curl)
+				{
+					form = curl_mime_init(curl);
+
+					field = curl_mime_addpart(form);
+					curl_mime_name(field, "photo");
+					curl_mime_filedata(field, fp);
+
+					headerlist = curl_slist_append(headerlist, buf);
+
+					curl_easy_setopt(curl, CURLOPT_URL, "http://example.com/examplepost.cgi");
+
+					curl_easy_setopt(curl, CURLOPT_MIMEPOST, form);
+
+					/* Get result */
+					res = curl_easy_perform(curl);
+
+					if (res != CURLE_OK)
+						fprintf(stderr, "curl_easy_perform() failed: %s\n",
+								curl_easy_strerror(res));
+
+					curl_easy_cleanup(curl);
+
+					curl_mime_free(form);
+
+					curl_slist_free_all(headerlist);
+
+					printf("Process 2 : Command successfully run\n");
+				}
+				else
+				{
+					printf("Process 2 : Failed to run curl\n");
+				}
 			}
 			pclose(fp);
 			while (digitalRead(25))
