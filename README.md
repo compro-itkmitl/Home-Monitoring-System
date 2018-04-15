@@ -1,7 +1,7 @@
 # Home Monitoring System
 
 # ![](/Resources/Home.png) Introduction
-สวัสดีครับ วันนี้กลุ่ม Home Monitoring System ได้จัดทำระบบเก็บข้อมูลต่างๆในบ้านขึ้นมา รวมถึงระบบเฝ้าระวังอย่าง Motion Detector ที่จะสามารถ จับตาดูความเรียบร้อยภายในบ้านได้หากมีความเคลื่อนไหวก็จะสามารถถ่ายภาพและ แจ้งเตือนผ่าน Telegram ได้อีกด้วย~
+สวัสดีครับ วันนี้กลุ่ม Home Monitoring System ได้จัดทำระบบเก็บข้อมูลต่าง ๆ ในบ้านขึ้นมา รวมถึงระบบเฝ้าระวังอย่าง Motion Detector ที่จะสามารถ จับตาดูความเรียบร้อยภายในบ้านได้หากมีความเคลื่อนไหวก็จะสามารถถ่ายภาพและ แจ้งเตือนผ่าน Telegram ได้อีกด้วย~
 
 
 # ![](/Resources/Help.png) How to use
@@ -26,8 +26,8 @@
 # ![](/Resources/Team.png) Assistant Teachers
 |ผศ. ดร. กิติ์สุชาติ พสุภา|ผศ. ดร. ปานวิทย์ ธุวะนุติ|
 |:-:|:-:|
-|![](/Resources/AjOong.jpg)|![](/Resources/AjPanwit.jpg)|
+|![](/Resources/AjOng.jpg)|![](/Resources/AjPanwit.jpg)|
 
-รายงานนี้เป็นส่วนหนึ่งของวิชา Computer Programming (รหัส 06016206)
+รายงานนี้เป็นส่วนหนึ่งของวิชา Computer Programming (รหัสวิชา 06016206)
 
 คณะเทคโนโลยีสารสนเทศ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
