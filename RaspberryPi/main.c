@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <curl/curl.h>
 
@@ -8,7 +9,7 @@
 #include "GPIO/pi_dht_read.h"
 
 void read_temp(void);
-void read_pir(void);
+int read_pir(void);
 
 int main(int argc, char **argv)
 {
@@ -56,21 +57,32 @@ void read_temp(void)
 			if (errors > 10)
 			{
 				// let the user know thier situation
-				printf("Read failed!\n");
+				printf("Process 1 : Read failed!\n");
 			}
 			errors += 1;
 		}
 
 		if (errors < 9)
 		{
-			printf("Temp %f Humid %f\n", temperature, humidity);
+			printf("Process 1 : Temp %f Humid %f\n", temperature, humidity);
 		}
 		usleep(5e2 * 1e3);
 	}
 }
 
-void read_pir(void)
+int read_pir(void)
 {
+	FILE *fp;
+
+	CURL *curl;
+	CURLcode res;
+
+	curl_mime *form = NULL;
+	curl_mimepart *field = NULL;
+	struct curl_slist *headerlist = NULL;
+	static const char buf[] = "Expect:";
+
+	curl_global_init(CURL_GLOBAL_ALL);
 
 	if (wiringPiSetup() == -1)
 		return 1;
@@ -79,11 +91,60 @@ void read_pir(void)
 
 	delay(2000);
 
+	printf("Process 2 : Process initialized!\n");
+
 	while (1)
 	{
 		if (digitalRead(25))
 		{
-			printf("Detected!\n");
+			printf("Process 2 : Detected!\n");
+
+			fp = popen("raspistill -o -", "r");
+
+			if (fp == NULL)
+			{
+				printf("Process 2 : Failed to run photo capture command\n");
+			}
+			else
+			{
+				printf("Process 2 : Command has started\n");
+
+				curl = curl_easy_init();
+				if (curl)
+				{
+					form = curl_mime_init(curl);
+
+					field = curl_mime_addpart(form);
+					curl_mime_name(field, "photo");
+					curl_mime_filedata(field, fp);
+
+					headerlist = curl_slist_append(headerlist, buf);
+
+					curl_easy_setopt(curl, CURLOPT_URL, "http://example.com/examplepost.cgi");
+
+					curl_easy_setopt(curl, CURLOPT_MIMEPOST, form);
+
+					/* Get result */
+					res = curl_easy_perform(curl);
+
+					if (res != CURLE_OK)
+						fprintf(stderr, "curl_easy_perform() failed: %s\n",
+								curl_easy_strerror(res));
+
+					curl_easy_cleanup(curl);
+
+					curl_mime_free(form);
+
+					curl_slist_free_all(headerlist);
+
+					printf("Process 2 : Command successfully run\n");
+				}
+				else
+				{
+					printf("Process 2 : Failed to run curl\n");
+				}
+			}
+			pclose(fp);
 			while (digitalRead(25))
 				;
 		}
