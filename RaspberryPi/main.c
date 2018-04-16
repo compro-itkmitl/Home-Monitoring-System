@@ -53,7 +53,7 @@ void read_temp(void)
 		}
 		else
 		{
-			// we're really fucked up now
+			// read error!
 			if (errors > 10)
 			{
 				// let the user know thier situation
