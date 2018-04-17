@@ -14,14 +14,6 @@ int read_pir(void);
 
 int main(int argc, char **argv)
 {
-	CURL *curl;
-	CURLcode res;
-
-	struct curl_httppost *formpost = NULL;
-	struct curl_httppost *lastptr = NULL;
-	struct curl_slist *headerlist = NULL;
-	static const char buf[] = "Expect:";
-
 	int process = fork();
 
 	// Temp read
@@ -79,8 +71,9 @@ void read_temp(void)
 
 			if (second == 0 && minute == 0)
 			{
-				printf("Process 1 : Temp %f Humid %f\n", temperature, humidity);
 			}
+
+			printf("Process 1 : Temp %f Humid %f\n", temperature, humidity);
 		}
 		usleep(5e2 * 1e3);
 	}
@@ -89,6 +82,14 @@ void read_temp(void)
 int read_pir(void)
 {
 	FILE *fp;
+
+	CURL *curl;
+	CURLcode res;
+
+	curl_mime *form = NULL;
+	curl_mimepart *field = NULL;
+	struct curl_slist *headerlist = NULL;
+	static const char buf[] = "Expect:";
 
 	curl_global_init(CURL_GLOBAL_ALL);
 
@@ -117,85 +118,45 @@ int read_pir(void)
 			{
 				printf("Process 2 : Command has started\n");
 
-				/* Fill in the file upload field */
-				curl_formadd(&formpost,
-							 &lastptr,
-							 CURLFORM_COPYNAME, "photo",
-							 CURLFORM_FILE, fp,
-							 CURLFORM_END);
-
-				/* Fill in the filename field */
-				curl_formadd(&formpost,
-							 &lastptr,
-							 CURLFORM_COPYNAME, "filename",
-							 CURLFORM_COPYCONTENTS, "postit2.c",
-							 CURLFORM_END);
-
 				curl = curl_easy_init();
-
-				headerlist = curl_slist_append(headerlist, buf);
 				if (curl)
 				{
-					/* what URL that receives this POST */
+					form = curl_mime_init(curl);
+
+					field = curl_mime_addpart(form);
+					curl_mime_name(field, "photo");
+					curl_mime_filedata(field, fp);
+
+					headerlist = curl_slist_append(headerlist, buf);
+
 					curl_easy_setopt(curl, CURLOPT_URL, "http://example.com/examplepost.cgi");
 
-					curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+					curl_easy_setopt(curl, CURLOPT_MIMEPOST, form);
 
-					/* Perform the request, res will get the return code */
+					/* Get result */
 					res = curl_easy_perform(curl);
-					/* Check for errors */
+
 					if (res != CURLE_OK)
 						fprintf(stderr, "curl_easy_perform() failed: %s\n",
 								curl_easy_strerror(res));
 
-					/* always cleanup */
 					curl_easy_cleanup(curl);
 
-					/* then cleanup the formpost chain */
-					curl_formfree(formpost);
-					/* free slist */
+					curl_mime_free(form);
+
 					curl_slist_free_all(headerlist);
+
+					printf("Process 2 : Command successfully run\n");
 				}
-
-				// curl = curl_easy_init();
-				// if (curl)
-				// {
-				// 	form = curl_mime_init(curl);
-
-				// 	field = curl_mime_addpart(form);
-				// 	curl_mime_name(field, "photo");
-				// 	curl_mime_filedata(field, fp);
-
-				// 	headerlist = curl_slist_append(headerlist, buf);
-
-				// 	curl_easy_setopt(curl, CURLOPT_URL, "http://example.com/examplepost.cgi");
-
-				// 	curl_easy_setopt(curl, CURLOPT_MIMEPOST, form);
-
-				// 	/* Get result */
-				// 	res = curl_easy_perform(curl);
-
-				// 	if (res != CURLE_OK)
-				// 		fprintf(stderr, "curl_easy_perform() failed: %s\n",
-				// 				curl_easy_strerror(res));
-
-				// 	curl_easy_cleanup(curl);
-
-				// 	curl_mime_free(form);
-
-				// 	curl_slist_free_all(headerlist);
-
-				printf("Process 2 : Command successfully run\n");
+				else
+				{
+					printf("Process 2 : Failed to run curl\n");
+				}
 			}
-			else
-			{
-				printf("Process 2 : Failed to run curl\n");
-			}
+			pclose(fp);
+			while (digitalRead(25))
+				;
 		}
-		pclose(fp);
-		while (digitalRead(25))
-			;
+		delay(2500);
 	}
-	delay(2500);
-}
 }

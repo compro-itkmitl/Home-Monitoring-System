@@ -11,7 +11,7 @@ const formidable = require('formidable');
 
 // Initialize AdminSDK
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert(ServiceAccount),
   databaseURL: 'https://compro-home-monitoring.firebaseio.com'
 });
 
@@ -20,14 +20,21 @@ const db = admin.database();
 
 // Initialize Express
 const express = require('express');
+const cors = require('cors');
 
 // Temp Monitoring function
 const TempMonitor = express();
 
-TempMonitor.get('/', (req, res) => res.send('Temp Monitor Function~ lel'));
-TempMonitor.post('/', (req, res) => {
+TempMonitor.use(cors({ origin: true }));
+
+TempMonitor.get('*', (req, res) => res.send('Temp Monitor Function~ lel'));
+TempMonitor.post('*', (req, res) => {
   const TempDBRef = db.ref('temp/');
   TempDBRef.set();
 });
 
-exports.temp = functions.https.onRequest(TempMonitor);
+const TempApi = functions.https.onRequest(TempMonitor);
+
+module.exports = {
+  TempApi
+};
