@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <curl/curl.h>
+#include <time.h>
 
 #include <wiringPi.h>
 
@@ -64,7 +65,15 @@ void read_temp(void)
 
 		if (errors < 9)
 		{
-			printf("Process 1 : Temp %f Humid %f\n", temperature, humidity);
+			int current_time = (int)time(NULL);
+			int time_second = current_time / 1000;
+			int second = time_second % 60;
+			int minute = time_second % 3600;
+
+			if (second == 0 && minute == 0)
+			{
+				printf("Process 1 : Temp %f Humid %f\n", temperature, humidity);
+			}
 		}
 		usleep(5e2 * 1e3);
 	}
