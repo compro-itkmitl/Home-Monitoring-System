@@ -91,7 +91,7 @@ int read_pir(void)
 	// struct curl_slist *headerlist = NULL;
 	// static const char buf[] = "Expect:";
 
-	curl_global_init(CURL_GLOBAL_ALL);
+	// curl_global_init(CURL_GLOBAL_ALL);
 
 	if (wiringPiSetup() == -1)
 		return 1;
@@ -118,7 +118,6 @@ int read_pir(void)
 			{
 				printf("Process 2 : Command has started\n");
 
-				curl = curl_easy_init();
 				CURL *curl;
 				CURLcode res;
 
