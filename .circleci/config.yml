@@ -28,11 +28,6 @@ jobs:
           name: Build
           command: |
             yarn build
-      - run:
-          name: Install functions NPM modules
-          command: |
-            cd functions
-            yarn install
       # - run:
       #     name: Test
       #     command: |
@@ -43,5 +38,5 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               ./node_modules/firebase-tools/bin/firebase use compro-home-monitoring
-              ./node_modules/firebase-tools/bin/firebase deploy --token=$FIREBASE_TOKEN
+              ./node_modules/firebase-tools/bin/firebase deploy --only hosting --token=$FIREBASE_TOKEN
             fi
