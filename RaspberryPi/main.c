@@ -68,9 +68,7 @@ void read_temp(void)
 			int second = current_time % 60;
 			int minute = current_time / 60 % 60;
 
-			printf("Process 1 : Time %d %d\n", minute, second);
-
-			if (second == 0 || minute % 10 == 0)
+			if (second == 0)
 			{
 				printf("Process 1 : Temp %f Humid %f @%d %d\n", temperature, humidity, minute, second);
 			}
@@ -143,7 +141,7 @@ int read_pir(void)
 				if (curl)
 				{
 					/* what URL that receives this POST */
-					curl_easy_setopt(curl, CURLOPT_URL, "http://example.com/examplepost.cgi");
+					curl_easy_setopt(curl, CURLOPT_URL, "https://wiput.me");
 
 					curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
