@@ -14,6 +14,13 @@ int read_pir(void);
 
 int main(int argc, char **argv)
 {
+	CURL *curl;
+	CURLcode res;
+
+	struct curl_httppost *formpost = NULL;
+	struct curl_httppost *lastptr = NULL;
+	struct curl_slist *headerlist = NULL;
+	static const char buf[] = "Expect:";
 
 	int process = fork();
 
@@ -82,14 +89,6 @@ void read_temp(void)
 int read_pir(void)
 {
 	FILE *fp;
-
-	CURL *curl;
-	CURLcode res;
-
-	struct curl_httppost *formpost = NULL;
-	struct curl_httppost *lastptr = NULL;
-	struct curl_slist *headerlist = NULL;
-	static const char buf[] = "Expect:";
 
 	curl_global_init(CURL_GLOBAL_ALL);
 
