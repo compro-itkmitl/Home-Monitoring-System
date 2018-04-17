@@ -69,7 +69,9 @@ void read_temp(void)
 			int second = time_second % 60;
 			int minute = time_second % 3600;
 
-			if (second == 0 || minute == 0)
+			printf("Process 1 : Time %d %d\n", minute, second);
+
+			if (second == 0 || minute % 10 == 0)
 			{
 				printf("Process 1 : Temp %f Humid %f @%d %d\n", temperature, humidity, minute, second);
 			}
