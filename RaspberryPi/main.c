@@ -65,9 +65,8 @@ void read_temp(void)
 		if (errors < 9)
 		{
 			int current_time = (int)time(NULL);
-			int time_second = current_time / 1000;
-			int second = time_second % 60;
-			int minute = time_second % 3600;
+			int second = current_time % 60;
+			int minute = current_time / 60 % 60;
 
 			printf("Process 1 : Time %d %d\n", minute, second);
 
