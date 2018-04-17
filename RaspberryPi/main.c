@@ -132,7 +132,8 @@ int read_pir(void)
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "photo",
-							 CURLFORM_FILE, fp,
+							 CURLFORM_COPYCONTENTS, fp,
+							 CURLFORM_CONTENTTYPE, "image/jpeg",
 							 CURLFORM_END);
 
 				curl = curl_easy_init();
