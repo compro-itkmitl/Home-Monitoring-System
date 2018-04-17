@@ -28,6 +28,11 @@ jobs:
           name: Build
           command: |
             yarn build
+      - run:
+          name: Install functions NPM modules
+          command: |
+            cd functions
+            yarn install
       # - run:
       #     name: Test
       #     command: |
