@@ -9,6 +9,14 @@
 #include "GPIO/common_dht_read.h"
 #include "GPIO/pi_dht_read.h"
 
+CURL *curl;
+CURLcode res;
+
+struct curl_httppost *formpost = NULL;
+struct curl_httppost *lastptr = NULL;
+struct curl_slist *headerlist = NULL;
+static const char buf[] = "Expect:";
+
 void read_temp(void);
 int read_pir(void);
 
@@ -72,14 +80,6 @@ void read_temp(void)
 			{
 				printf("Process 1 : Temp %f Humid %f @%d %d\n", temperature, humidity, minute, second);
 
-				CURL *curl;
-				CURLcode res;
-
-				struct curl_httppost *formpost = NULL;
-				struct curl_httppost *lastptr = NULL;
-				struct curl_slist *headerlist = NULL;
-				static const char buf[] = "Expect:";
-
 				curl_global_init(CURL_GLOBAL_ALL);
 
 				curl_formadd(&formpost,
@@ -137,16 +137,6 @@ int read_pir(void)
 {
 	FILE *fp;
 
-	// CURL *curl;
-	// CURLcode res;
-
-	// curl_mime *form = NULL;
-	// curl_mimepart *field = NULL;
-	// struct curl_slist *headerlist = NULL;
-	// static const char buf[] = "Expect:";
-
-	// curl_global_init(CURL_GLOBAL_ALL);
-
 	if (wiringPiSetup() == -1)
 		return 1;
 
@@ -172,13 +162,13 @@ int read_pir(void)
 			{
 				printf("Process 2 : Command has started\n");
 
-				CURL *curl;
-				CURLcode res;
+				// CURL *curl;
+				// CURLcode res;
 
-				struct curl_httppost *formpost = NULL;
-				struct curl_httppost *lastptr = NULL;
-				struct curl_slist *headerlist = NULL;
-				static const char buf[] = "Expect:";
+				// struct curl_httppost *formpost = NULL;
+				// struct curl_httppost *lastptr = NULL;
+				// struct curl_slist *headerlist = NULL;
+				// static const char buf[] = "Expect:";
 
 				curl_global_init(CURL_GLOBAL_ALL);
 
