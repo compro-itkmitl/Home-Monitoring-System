@@ -82,7 +82,11 @@ void read_temp(void)
 				static const char buf[] = "Expect:";
 
 				char time_str[20];
+				char temp_str[20];
+				char humidity_str[20];
 				snprintf(time_str, 20, "%d", (int)time(NULL));
+				snprintf(temp_str, 20, "%f", temperature);
+				snprintf(humidity_str, 20, "%f", humidity);
 
 				curl_global_init(CURL_GLOBAL_ALL);
 
@@ -95,13 +99,13 @@ void read_temp(void)
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "temp",
-							 CURLFORM_COPYCONTENTS, temperature,
+							 CURLFORM_COPYCONTENTS, temp_str,
 							 CURLFORM_END);
 
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "humidity",
-							 CURLFORM_COPYCONTENTS, humidity,
+							 CURLFORM_COPYCONTENTS, humidity_str,
 							 CURLFORM_END);
 
 				curl = curl_easy_init();
