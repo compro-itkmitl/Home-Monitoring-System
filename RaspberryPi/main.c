@@ -126,10 +126,10 @@ void read_temp(void)
 					/* free slist */
 					curl_slist_free_all(headerlist);
 				}
+				printf("Process 1 : Command successfully run\n");
 			}
 		}
 		usleep(5e2 * 1e3);
-		printf("Process 1 : Command successfully run\n");
 	}
 }
 
