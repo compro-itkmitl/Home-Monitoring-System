@@ -240,7 +240,7 @@ int read_pir(void)
 			pclose(fp);
 			while (digitalRead(25))
 				;
+			delay(2500);
 		}
-		delay(2500);
 	}
 }
