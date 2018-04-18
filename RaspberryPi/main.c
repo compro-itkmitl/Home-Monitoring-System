@@ -33,7 +33,7 @@ int main(int argc, char **argv)
 
 void read_temp(void)
 {
-	int pin = 18, errors = 0;
+	int pin = 23, errors = 0;
 	float humidity = 0, temperature = 0;
 
 	while (1)
