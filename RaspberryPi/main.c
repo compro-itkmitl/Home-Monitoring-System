@@ -72,60 +72,60 @@ void read_temp(void)
 			{
 				printf("Process 1 : Temp %f Humid %f @%d %d\n", temperature, humidity, minute, second);
 
-				// CURL *curl;
-				// CURLcode res;
+				CURL *curl;
+				CURLcode res;
 
-				// struct curl_httppost *formpost = NULL;
-				// struct curl_httppost *lastptr = NULL;
-				// struct curl_slist *headerlist = NULL;
-				// static const char buf[] = "Expect:";
+				struct curl_httppost *formpost = NULL;
+				struct curl_httppost *lastptr = NULL;
+				struct curl_slist *headerlist = NULL;
+				static const char buf[] = "Expect:";
 
-				// curl_global_init(CURL_GLOBAL_ALL);
+				curl_global_init(CURL_GLOBAL_ALL);
 
-				// curl_formadd(&formpost,
-				// 			 &lastptr,
-				// 			 CURLFORM_COPYNAME, "time",
-				// 			 CURLFORM_COPYCONTENTS, (int)time(NULL),
-				// 			 CURLFORM_END);
+				curl_formadd(&formpost,
+							 &lastptr,
+							 CURLFORM_COPYNAME, "time",
+							 CURLFORM_COPYCONTENTS, itoa((int)time(NULL), buffer, 10),
+							 CURLFORM_END);
 
-				// curl_formadd(&formpost,
-				// 			 &lastptr,
-				// 			 CURLFORM_COPYNAME, "temp",
-				// 			 CURLFORM_COPYCONTENTS, temperature,
-				// 			 CURLFORM_END);
+				curl_formadd(&formpost,
+							 &lastptr,
+							 CURLFORM_COPYNAME, "temp",
+							 CURLFORM_COPYCONTENTS, temperature,
+							 CURLFORM_END);
 
-				// curl_formadd(&formpost,
-				// 			 &lastptr,
-				// 			 CURLFORM_COPYNAME, "humidity",
-				// 			 CURLFORM_COPYCONTENTS, humidity,
-				// 			 CURLFORM_END);
+				curl_formadd(&formpost,
+							 &lastptr,
+							 CURLFORM_COPYNAME, "humidity",
+							 CURLFORM_COPYCONTENTS, humidity,
+							 CURLFORM_END);
 
-				// curl = curl_easy_init();
+				curl = curl_easy_init();
 
-				// headerlist = curl_slist_append(headerlist, buf);
-				// if (curl)
-				// {
-				// 	/* what URL that receives this POST */
-				// 	curl_easy_setopt(curl, CURLOPT_URL, "https://us-central1-compro-home-monitoring.cloudfunctions.net/temp");
+				headerlist = curl_slist_append(headerlist, buf);
+				if (curl)
+				{
+					/* what URL that receives this POST */
+					curl_easy_setopt(curl, CURLOPT_URL, "https://us-central1-compro-home-monitoring.cloudfunctions.net/temp");
 
-				// 	curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+					curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
-				// 	/* Perform the request, res will get the return code */
-				// 	res = curl_easy_perform(curl);
-				// 	/* Check for errors */
-				// 	if (res != CURLE_OK)
-				// 		fprintf(stderr, "curl_easy_perform() failed: %s\n",
-				// 				curl_easy_strerror(res));
+					/* Perform the request, res will get the return code */
+					res = curl_easy_perform(curl);
+					/* Check for errors */
+					if (res != CURLE_OK)
+						fprintf(stderr, "curl_easy_perform() failed: %s\n",
+								curl_easy_strerror(res));
 
-				// 	/* always cleanup */
-				// 	curl_easy_cleanup(curl);
+					/* always cleanup */
+					curl_easy_cleanup(curl);
 
-				// 	/* then cleanup the formpost chain */
-				// 	curl_formfree(formpost);
+					/* then cleanup the formpost chain */
+					curl_formfree(formpost);
 
-				// 	/* free slist */
-				// 	curl_slist_free_all(headerlist);
-				// }
+					/* free slist */
+					curl_slist_free_all(headerlist);
+				}
 				printf("Process 1 : Command successfully run\n");
 			}
 		}
@@ -170,6 +170,8 @@ int read_pir(void)
 				struct curl_slist *headerlist = NULL;
 				static const char buf[] = "Expect:";
 
+				char buffer[20];
+
 				printf("Process 2: Pass 1\n");
 				curl_global_init(CURL_GLOBAL_ALL);
 
@@ -185,7 +187,7 @@ int read_pir(void)
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "time",
-							 CURLFORM_COPYCONTENTS, (int)time(NULL),
+							 CURLFORM_COPYCONTENTS, itoa((int)time(NULL), buffer, 10),
 							 CURLFORM_END);
 
 				printf("Process 2: Pass 3\n");
