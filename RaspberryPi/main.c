@@ -82,9 +82,9 @@ void read_temp(void)
 				static const char buf[] = "Expect:";
 
 				char time_str[20];
-				itoa((int)time(NULL), time_str, 10)
+				itoa((int)time(NULL), time_str, 10);
 
-					curl_global_init(CURL_GLOBAL_ALL);
+				curl_global_init(CURL_GLOBAL_ALL);
 
 				curl_formadd(&formpost,
 							 &lastptr,
@@ -175,9 +175,9 @@ int read_pir(void)
 				static const char buf[] = "Expect:";
 
 				char time_str[20];
-				itoa((int)time(NULL), time_str, 10)
+				itoa((int)time(NULL), time_str, 10);
 
-					printf("Process 2: Pass 1\n");
+				printf("Process 2: Pass 1\n");
 				curl_global_init(CURL_GLOBAL_ALL);
 
 				/* Fill in the file upload field */
