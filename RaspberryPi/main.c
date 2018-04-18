@@ -91,7 +91,7 @@ void read_temp(void)
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "temp",
-							 CURLFORM_COPYCONTENTS, temp,
+							 CURLFORM_COPYCONTENTS, temperature,
 							 CURLFORM_END);
 
 				curl_formadd(&formpost,
@@ -196,17 +196,17 @@ int read_pir(void)
 							 CURLFORM_COPYCONTENTS, (int)time(NULL),
 							 CURLFORM_END);
 
-				curl_formadd(&formpost,
-							 &lastptr,
-							 CURLFORM_COPYNAME, "temp",
-							 CURLFORM_COPYCONTENTS, temp,
-							 CURLFORM_END);
+				// curl_formadd(&formpost,
+				// 			 &lastptr,
+				// 			 CURLFORM_COPYNAME, "temp",
+				// 			 CURLFORM_COPYCONTENTS, temp,
+				// 			 CURLFORM_END);
 
-				curl_formadd(&formpost,
-							 &lastptr,
-							 CURLFORM_COPYNAME, "humidity",
-							 CURLFORM_COPYCONTENTS, humidity,
-							 CURLFORM_END);
+				// curl_formadd(&formpost,
+				// 			 &lastptr,
+				// 			 CURLFORM_COPYNAME, "humidity",
+				// 			 CURLFORM_COPYCONTENTS, humidity,
+				// 			 CURLFORM_END);
 
 				curl = curl_easy_init();
 				/* initialize custom header list (stating that Expect: 100-continue is not
