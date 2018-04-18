@@ -114,6 +114,8 @@ void read_temp(void)
 
 					curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
+					curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+
 					/* Perform the request, res will get the return code */
 					res = curl_easy_perform(curl);
 					/* Check for errors */
