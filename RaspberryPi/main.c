@@ -148,9 +148,9 @@ int read_pir(void)
 					/* Perform the request, res will get the return code */
 					res = curl_easy_perform(curl);
 					/* Check for errors */
-					// if (res != CURLE_OK)
-					// 	fprintf(stderr, "curl_easy_perform() failed: %s\n",
-					// 			curl_easy_strerror(res));
+					if (res != CURLE_OK)
+						fprintf(stderr, "curl_easy_perform() failed: %s\n",
+								curl_easy_strerror(res));
 
 					/* always cleanup */
 					curl_easy_cleanup(curl);
@@ -159,36 +159,9 @@ int read_pir(void)
 					curl_formfree(formpost);
 					/* free slist */
 					curl_slist_free_all(headerlist);
+
+					printf("Process 2 : Command successfully run\n");
 				}
-				// if (curl)
-				// {
-				// 	form = curl_mime_init(curl);
-
-				// 	field = curl_mime_addpart(form);
-				// 	curl_mime_name(field, "photo");
-				// 	curl_mime_filedata(field, fp);
-
-				// 	headerlist = curl_slist_append(headerlist, buf);
-
-				// 	curl_easy_setopt(curl, CURLOPT_URL, "http://example.com/examplepost.cgi");
-
-				// 	curl_easy_setopt(curl, CURLOPT_MIMEPOST, form);
-
-				// 	/* Get result */
-				// 	res = curl_easy_perform(curl);
-
-				// 	if (res != CURLE_OK)
-				// 		fprintf(stderr, "curl_easy_perform() failed: %s\n",
-				// 				curl_easy_strerror(res));
-
-				// 	curl_easy_cleanup(curl);
-
-				// 	curl_mime_free(form);
-
-				// 	curl_slist_free_all(headerlist);
-
-				// 	printf("Process 2 : Command successfully run\n");
-				// }
 				else
 				{
 					printf("Process 2 : Failed to run curl\n");
