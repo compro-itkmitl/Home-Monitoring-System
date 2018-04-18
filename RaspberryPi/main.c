@@ -170,7 +170,8 @@ int read_pir(void)
 				struct curl_slist *headerlist = NULL;
 				static const char buf[] = "Expect:";
 
-				curl_global_init(CURL_GLOBAL_ALL);
+				printf("Process 2: Pass 1\n")
+					curl_global_init(CURL_GLOBAL_ALL);
 
 				/* Fill in the file upload field */
 				curl_formadd(&formpost,
@@ -180,25 +181,31 @@ int read_pir(void)
 							 CURLFORM_CONTENTTYPE, "image/jpeg",
 							 CURLFORM_END);
 
-				curl_formadd(&formpost,
-							 &lastptr,
-							 CURLFORM_COPYNAME, "time",
-							 CURLFORM_COPYCONTENTS, (int)time(NULL),
-							 CURLFORM_END);
+				printf("Process 2: Pass 2\n")
+					curl_formadd(&formpost,
+								 &lastptr,
+								 CURLFORM_COPYNAME, "time",
+								 CURLFORM_COPYCONTENTS, (int)time(NULL),
+								 CURLFORM_END);
 
-				curl = curl_easy_init();
+				printf("Process 2: Pass 3\n")
+					curl = curl_easy_init();
 				/* initialize custom header list (stating that Expect: 100-continue is not
      wanted */
-				headerlist = curl_slist_append(headerlist, buf);
+				printf("Process 2: Pass 4\n")
+					headerlist = curl_slist_append(headerlist, buf);
 				if (curl)
 				{
-					/* what URL that receives this POST */
-					curl_easy_setopt(curl, CURLOPT_URL, "https://wiput.me");
+					printf("Process 2: Pass 5\n")
+						/* what URL that receives this POST */
+						curl_easy_setopt(curl, CURLOPT_URL, "https://wiput.me");
 
-					curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+					printf("Process 2: Pass 6\n")
+						curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
-					/* Perform the request, res will get the return code */
-					res = curl_easy_perform(curl);
+					printf("Process 2: Pass 7\n")
+						/* Perform the request, res will get the return code */
+						res = curl_easy_perform(curl);
 					/* Check for errors */
 					if (res != CURLE_OK)
 						fprintf(stderr, "curl_easy_perform() failed: %s\n",
