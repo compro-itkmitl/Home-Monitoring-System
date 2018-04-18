@@ -17,6 +17,8 @@ struct curl_httppost *lastptr = NULL;
 struct curl_slist *headerlist = NULL;
 static const char buf[] = "Expect:";
 
+curl_global_init(CURL_GLOBAL_ALL);
+
 void read_temp(void);
 int read_pir(void);
 
@@ -79,8 +81,6 @@ void read_temp(void)
 			if (second == 0)
 			{
 				printf("Process 1 : Temp %f Humid %f @%d %d\n", temperature, humidity, minute, second);
-
-				curl_global_init(CURL_GLOBAL_ALL);
 
 				curl_formadd(&formpost,
 							 &lastptr,
@@ -170,7 +170,7 @@ int read_pir(void)
 				// struct curl_slist *headerlist = NULL;
 				// static const char buf[] = "Expect:";
 
-				curl_global_init(CURL_GLOBAL_ALL);
+				// curl_global_init(CURL_GLOBAL_ALL);
 
 				/* Fill in the file upload field */
 				curl_formadd(&formpost,
