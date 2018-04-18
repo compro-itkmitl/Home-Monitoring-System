@@ -81,14 +81,15 @@ void read_temp(void)
 				struct curl_slist *headerlist = NULL;
 				static const char buf[] = "Expect:";
 
-				char buffer[20];
+				char time_str[20];
+				itoa((int)time(NULL), time_str, 10)
 
-				curl_global_init(CURL_GLOBAL_ALL);
+					curl_global_init(CURL_GLOBAL_ALL);
 
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "time",
-							 CURLFORM_COPYCONTENTS, itoa((int)time(NULL), buffer, 10),
+							 CURLFORM_COPYCONTENTS, time_str,
 							 CURLFORM_END);
 
 				curl_formadd(&formpost,
@@ -173,9 +174,10 @@ int read_pir(void)
 				struct curl_slist *headerlist = NULL;
 				static const char buf[] = "Expect:";
 
-				char buffer[20];
+				char time_str[20];
+				itoa((int)time(NULL), time_str, 10)
 
-				printf("Process 2: Pass 1\n");
+					printf("Process 2: Pass 1\n");
 				curl_global_init(CURL_GLOBAL_ALL);
 
 				/* Fill in the file upload field */
@@ -190,7 +192,7 @@ int read_pir(void)
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "time",
-							 CURLFORM_COPYCONTENTS, itoa((int)time(NULL), buffer, 10),
+							 CURLFORM_COPYCONTENTS, time_str,
 							 CURLFORM_END);
 
 				printf("Process 2: Pass 3\n");
