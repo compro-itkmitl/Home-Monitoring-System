@@ -27,14 +27,29 @@ const TempMonitor = express();
 
 TempMonitor.use(cors({ origin: true }));
 
-TempMonitor.get('*', (req, res) => res.send('Temp Monitor Function~ lel'));
-TempMonitor.post('*', (req, res) => {
-  const TempDBRef = db.ref('temp/');
-  TempDBRef.set();
+TempMonitor.get('/', (req, res) => res.status(200));
+TempMonitor.post('/', (req, res) => {
+  let form = new formidable.IncomingForm();
+
+  form.parse(req, (err, fields, files) => {
+    let time = fields.time;
+    let temp = fields.temp;
+    let humidity = fields.humidity;
+
+    let TempDBRef = db.ref(`temp/${time}`);
+    TempDBRef.set({ value: temp });
+
+    let HumidityRef = db.ref(`humidity/${time}`);
+    HumidityRef.set({ value: humidity });
+  });
+
+  res.status(200).send('Success!');
 });
 
-const TempApi = functions.https.onRequest(TempMonitor);
-
-module.exports = {
-  TempApi
-};
+// Fix '/' path
+exports.temp = functions.https.onRequest((req, res) => {
+  if (!req.path) {
+    req.url = `/${req.url}`; // prepend '/' to keep query params if any
+  }
+  return TempMonitor(req, res);
+});
