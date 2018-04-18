@@ -80,6 +80,8 @@ void read_temp(void)
 				struct curl_slist *headerlist = NULL;
 				static const char buf[] = "Expect:";
 
+				char buffer[20];
+
 				curl_global_init(CURL_GLOBAL_ALL);
 
 				curl_formadd(&formpost,
