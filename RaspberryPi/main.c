@@ -82,7 +82,7 @@ void read_temp(void)
 				static const char buf[] = "Expect:";
 
 				char time_str[20];
-				itoa((int)time(NULL), time_str, 10);
+				snprintf(time_str, 20, "%d", (int)time(NULL));
 
 				curl_global_init(CURL_GLOBAL_ALL);
 
@@ -175,7 +175,7 @@ int read_pir(void)
 				static const char buf[] = "Expect:";
 
 				char time_str[20];
-				itoa((int)time(NULL), time_str, 10);
+				snprintf(time_str, 20, "%d", (int)time(NULL));
 
 				printf("Process 2: Pass 1\n");
 				curl_global_init(CURL_GLOBAL_ALL);
