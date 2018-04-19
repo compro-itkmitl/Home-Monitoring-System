@@ -1,3 +1,7 @@
+const path = require('path');
+const os = require('os');
+const fs = require('fs');
+
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 const functions = require('firebase-functions');
 
@@ -71,12 +75,21 @@ MotionMonitor.post('/', (req, res) => {
   const busboy = new Busboy({ headers: req.headers });
 
   let formData = {};
+  let uploads = {};
+
+  busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+    let filepath = path.join(os.tmpdir(), fieldname);
+    uploads[fieldname] = { file: filepath };
+    console.log(`Saving '${fieldname}' to ${filepath}`);
+    file.pipe(fs.createWriteStream(filepath));
+  });
 
   busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
     console.log(val);
     formData[fieldname] = val;
   });
   busboy.on('finish', () => {
+    console.log(uploads);
     let time = formData.time;
     let temp = formData.temp;
     let humidity = formData.humidity;
