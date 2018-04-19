@@ -143,7 +143,6 @@ void read_temp(void)
 
 int read_pir(void)
 {
-	FILE *fp;
 
 	if (wiringPiSetup() == -1)
 		return 1;
@@ -165,7 +164,7 @@ int read_pir(void)
 		{
 			printf("Process 2 : Detected!\n");
 
-			fp = popen("raspistill -w 640 -h 480 -e jpg -o -", "r");
+			char *fp = popen("raspistill -w 640 -h 480 -e jpg -o -", "r");
 
 			if (fp == NULL)
 			{
