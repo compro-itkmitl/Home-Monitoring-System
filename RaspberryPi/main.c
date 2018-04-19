@@ -148,8 +148,13 @@ int read_pir(void)
 	if (wiringPiSetup() == -1)
 		return 1;
 
-	pinMode(25, INPUT);
+	int pin = 25;
 
+	pinMode(pin, OUTPUT);
+	digitalWrite(pin, LOW);
+	delay(2000);
+
+	pinMode(pin, INPUT);
 	delay(2000);
 
 	printf("Process 2 : Process initialized!\n");
@@ -242,6 +247,6 @@ int read_pir(void)
 				;
 			delay(2500);
 		}
-		usleep(1e2);
+		delay(1);
 	}
 }
