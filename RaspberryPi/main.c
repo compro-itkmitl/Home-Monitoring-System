@@ -164,7 +164,7 @@ int read_pir(void)
 		{
 			printf("Process 2 : Detected!\n");
 
-			system("raspistill -w 1024 -h 768 -o /tmp/mition.jpg");
+			system("raspistill -w 1024 -h 768 -o /tmp/motion.jpg");
 
 			printf("Process 2 : Command has started\n");
 
@@ -186,7 +186,7 @@ int read_pir(void)
 			curl_formadd(&formpost,
 						 &lastptr,
 						 CURLFORM_COPYNAME, "photo",
-						 CURLFORM_FILE, "/tmp/mition.jpg",
+						 CURLFORM_FILE, "/tmp/motion.jpg",
 						 CURLFORM_CONTENTTYPE, "image/jpeg",
 						 CURLFORM_END);
 
@@ -229,7 +229,7 @@ int read_pir(void)
 				/* free slist */
 				curl_slist_free_all(headerlist);
 
-				system("rm /tmp/mition.jpg");
+				system("rm /tmp/motion.jpg");
 
 				printf("Process 2 : Command successfully run\n");
 			}
