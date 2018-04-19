@@ -207,7 +207,7 @@ int read_pir(void)
 			{
 				printf("Process 2: Pass 5\n");
 				/* what URL that receives this POST */
-				curl_easy_setopt(curl, CURLOPT_URL, "https://wiput.me");
+				curl_easy_setopt(curl, CURLOPT_URL, "https://us-central1-compro-home-monitoring.cloudfunctions.net/motion");
 				curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
 				printf("Process 2: Pass 6\n");
