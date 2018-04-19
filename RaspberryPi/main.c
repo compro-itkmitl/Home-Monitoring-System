@@ -242,6 +242,6 @@ int read_pir(void)
 				;
 			delay(2500);
 		}
-		delay(5);
+		usleep(1e2);
 	}
 }
