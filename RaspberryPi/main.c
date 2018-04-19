@@ -166,85 +166,76 @@ int read_pir(void)
 
 			system("raspistill -o /tmp/mition.jpg");
 
-			if (fp == NULL)
+			printf("Process 2 : Command has started\n");
+
+			CURL *curl;
+			CURLcode res;
+
+			struct curl_httppost *formpost = NULL;
+			struct curl_httppost *lastptr = NULL;
+			struct curl_slist *headerlist = NULL;
+			static const char buf[] = "Expect:";
+
+			char time_str[20];
+			snprintf(time_str, 20, "%d", (int)time(NULL));
+
+			printf("Process 2: Pass 1\n");
+			curl_global_init(CURL_GLOBAL_ALL);
+
+			/* Fill in the file upload field */
+			curl_formadd(&formpost,
+						 &lastptr,
+						 CURLFORM_COPYNAME, "photo",
+						 CURLFORM_FILE, "/tmp/mition.jpg",
+						 CURLFORM_CONTENTTYPE, "image/jpeg",
+						 CURLFORM_END);
+
+			printf("Process 2: Pass 2\n");
+			curl_formadd(&formpost,
+						 &lastptr,
+						 CURLFORM_COPYNAME, "time",
+						 CURLFORM_COPYCONTENTS, time_str,
+						 CURLFORM_END);
+
+			printf("Process 2: Pass 3\n");
+			curl = curl_easy_init();
+			/* initialize custom header list (stating that Expect: 100-continue is not
+     wanted */
+			printf("Process 2: Pass 4\n");
+			headerlist = curl_slist_append(headerlist, buf);
+			if (curl)
 			{
-				printf("Process 2 : Failed to run photo capture command\n");
+				printf("Process 2: Pass 5\n");
+				/* what URL that receives this POST */
+				curl_easy_setopt(curl, CURLOPT_URL, "https://wiput.me");
+
+				printf("Process 2: Pass 6\n");
+				curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+
+				printf("Process 2: Pass 7\n");
+				/* Perform the request, res will get the return code */
+				res = curl_easy_perform(curl);
+				/* Check for errors */
+				if (res != CURLE_OK)
+					fprintf(stderr, "curl_easy_perform() failed: %s\n",
+							curl_easy_strerror(res));
+
+				/* always cleanup */
+				curl_easy_cleanup(curl);
+
+				/* then cleanup the formpost chain */
+				curl_formfree(formpost);
+				/* free slist */
+				curl_slist_free_all(headerlist);
+
+				system("rm /tmp/mition.jpg");
+
+				printf("Process 2 : Command successfully run\n");
 			}
 			else
 			{
-				printf("Process 2 : Command has started\n");
-
-				CURL *curl;
-				CURLcode res;
-
-				struct curl_httppost *formpost = NULL;
-				struct curl_httppost *lastptr = NULL;
-				struct curl_slist *headerlist = NULL;
-				static const char buf[] = "Expect:";
-
-				char time_str[20];
-				snprintf(time_str, 20, "%d", (int)time(NULL));
-
-				printf("Process 2: Pass 1\n");
-				curl_global_init(CURL_GLOBAL_ALL);
-
-				/* Fill in the file upload field */
-				curl_formadd(&formpost,
-							 &lastptr,
-							 CURLFORM_COPYNAME, "photo",
-							 CURLFORM_FILE, "/tmp/mition.jpg",
-							 CURLFORM_CONTENTTYPE, "image/jpeg",
-							 CURLFORM_END);
-
-				printf("Process 2: Pass 2\n");
-				curl_formadd(&formpost,
-							 &lastptr,
-							 CURLFORM_COPYNAME, "time",
-							 CURLFORM_COPYCONTENTS, time_str,
-							 CURLFORM_END);
-
-				printf("Process 2: Pass 3\n");
-				curl = curl_easy_init();
-				/* initialize custom header list (stating that Expect: 100-continue is not
-     wanted */
-				printf("Process 2: Pass 4\n");
-				headerlist = curl_slist_append(headerlist, buf);
-				if (curl)
-				{
-					printf("Process 2: Pass 5\n");
-					/* what URL that receives this POST */
-					curl_easy_setopt(curl, CURLOPT_URL, "https://wiput.me");
-
-					printf("Process 2: Pass 6\n");
-					curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
-
-					printf("Process 2: Pass 7\n");
-					/* Perform the request, res will get the return code */
-					res = curl_easy_perform(curl);
-					/* Check for errors */
-					if (res != CURLE_OK)
-						fprintf(stderr, "curl_easy_perform() failed: %s\n",
-								curl_easy_strerror(res));
-
-					/* always cleanup */
-					curl_easy_cleanup(curl);
-
-					/* then cleanup the formpost chain */
-					curl_formfree(formpost);
-					/* free slist */
-					curl_slist_free_all(headerlist);
-
-					system("rm /tmp/mition.jpg");
-					
-
-					printf("Process 2 : Command successfully run\n");
-				}
-				else
-				{
-					printf("Process 2 : Failed to run curl\n");
-				}
+				printf("Process 2 : Failed to run curl\n");
 			}
-			pclose(fp);
 			while (digitalRead(25))
 				;
 			delay(2500);
