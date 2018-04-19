@@ -164,7 +164,13 @@ int read_pir(void)
 		{
 			printf("Process 2 : Detected!\n");
 
-			char *fp = popen("raspistill -w 640 -h 480 -e jpg -o -", "r");
+			system("raspistill -o /tmp/mition.jpg");
+
+			char buf[256];
+			while (fgets(buf, sizeof(buf), fp) != 0) {
+				
+			}
+			pclose(fp);
 
 			if (fp == NULL)
 			{
@@ -192,7 +198,7 @@ int read_pir(void)
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "photo",
-							 CURLFORM_COPYCONTENTS, fp,
+							 CURLFORM_FILE, "/tmp/mition.jpg",
 							 CURLFORM_CONTENTTYPE, "image/jpeg",
 							 CURLFORM_END);
 
@@ -233,6 +239,9 @@ int read_pir(void)
 					curl_formfree(formpost);
 					/* free slist */
 					curl_slist_free_all(headerlist);
+
+					system("rm /tmp/mition.jpg");
+					
 
 					printf("Process 2 : Command successfully run\n");
 				}
