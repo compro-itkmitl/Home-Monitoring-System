@@ -6,8 +6,8 @@ const admin = require('firebase-admin');
 
 const ServiceAccount = require('./service_account.json');
 
-// formidable plugins
-const formidable = require('formidable');
+// const formidable = require('formidable');
+const Busboy = require('busboy');
 
 // Initialize AdminSDK
 admin.initializeApp({
@@ -29,21 +29,30 @@ TempMonitor.use(cors({ origin: true }));
 
 TempMonitor.get('/', (req, res) => res.status(200));
 TempMonitor.post('/', (req, res) => {
-  let form = new formidable.IncomingForm();
+  const busboy = new Busboy({ headers: req.headers });
 
-  form.parse(req, (err, fields, files) => {
-    let time = fields.time;
-    let temp = fields.temp;
-    let humidity = fields.humidity;
+  let formData = {};
 
-    let TempDBRef = db.ref(`temp/${time}`);
-    TempDBRef.set({ value: temp });
-
-    let HumidityRef = db.ref(`humidity/${time}`);
-    HumidityRef.set({ value: humidity });
+  busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
+    console.log(val);
+    formData[fieldname] = val;
   });
+  busboy.on('finish', () => {
+    let time = formData.time;
+    let temp = formData.temp;
+    let humidity = formData.humidity;
 
-  res.status(200).send('Success!');
+    let TempDBRef = db.ref(`temp`);
+    let TempChildRef = TempDBRef.child(time);
+    TempChildRef.set({ value: parseFloat(temp) });
+
+    let HumidityRef = db.ref(`humidity`);
+    let HumiditypChildRef = HumidityRef.child(time);
+    HumiditypChildRef.set({ value: parseFloat(humidity) });
+
+    res.status(200).send('Success!\n');
+  });
+  busboy.end(req.rawBody);
 });
 
 // Fix '/' path
@@ -52,4 +61,43 @@ exports.temp = functions.https.onRequest((req, res) => {
     req.url = `/${req.url}`; // prepend '/' to keep query params if any
   }
   return TempMonitor(req, res);
+});
+
+// Motion monitor
+const MotionMonitor = express();
+
+MotionMonitor.get('/', (req, res) => res.status(200));
+MotionMonitor.post('/', (req, res) => {
+  const busboy = new Busboy({ headers: req.headers });
+
+  let formData = {};
+
+  busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
+    console.log(val);
+    formData[fieldname] = val;
+  });
+  busboy.on('finish', () => {
+    let time = formData.time;
+    let temp = formData.temp;
+    let humidity = formData.humidity;
+
+    let TempDBRef = db.ref(`temp`);
+    let TempChildRef = TempDBRef.child(time);
+    TempChildRef.set({ value: parseFloat(temp) });
+
+    let HumidityRef = db.ref(`humidity`);
+    let HumiditypChildRef = HumidityRef.child(time);
+    HumiditypChildRef.set({ value: parseFloat(humidity) });
+
+    res.status(200).send('Success!\n');
+  });
+  busboy.end(req.rawBody);
+});
+
+// Fix '/' path
+exports.motion = functions.https.onRequest((req, res) => {
+  if (!req.path) {
+    req.url = `/${req.url}`; // prepend '/' to keep query params if any
+  }
+  return MotionMonitor(req, res);
 });
