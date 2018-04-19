@@ -165,7 +165,7 @@ int read_pir(void)
 		{
 			printf("Process 2 : Detected!\n");
 
-			fp = popen("raspistill -o -", "r");
+			fp = popen("raspistill -w 640 -h 480 -e jpg -o -", "r");
 
 			if (fp == NULL)
 			{
