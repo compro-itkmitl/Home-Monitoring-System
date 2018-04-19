@@ -164,7 +164,7 @@ int read_pir(void)
 		{
 			printf("Process 2 : Detected!\n");
 
-			system("raspistill -q 70 -o /tmp/mition.jpg");
+			system("raspistill -w 1024 -h 768 -o /tmp/mition.jpg");
 
 			printf("Process 2 : Command has started\n");
 
