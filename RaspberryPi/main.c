@@ -166,12 +166,6 @@ int read_pir(void)
 
 			system("raspistill -o /tmp/mition.jpg");
 
-			char buf[256];
-			while (fgets(buf, sizeof(buf), fp) != 0) {
-				
-			}
-			pclose(fp);
-
 			if (fp == NULL)
 			{
 				printf("Process 2 : Failed to run photo capture command\n");
