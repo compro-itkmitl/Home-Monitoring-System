@@ -91,16 +91,6 @@ MotionMonitor.post('/', (req, res) => {
   busboy.on('finish', () => {
     console.log(uploads);
     let time = formData.time;
-    let temp = formData.temp;
-    let humidity = formData.humidity;
-
-    let TempDBRef = db.ref(`temp`);
-    let TempChildRef = TempDBRef.child(time);
-    TempChildRef.set({ value: parseFloat(temp) });
-
-    let HumidityRef = db.ref(`humidity`);
-    let HumiditypChildRef = HumidityRef.child(time);
-    HumiditypChildRef.set({ value: parseFloat(humidity) });
 
     res.status(200).send('Success!\n');
   });
