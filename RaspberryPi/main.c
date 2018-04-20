@@ -84,9 +84,13 @@ void read_temp(void)
 				char time_str[20];
 				char temp_str[20];
 				char humidity_str[20];
+				char device_id[200];
+				char accesskey[200];
 				snprintf(time_str, 20, "%d", (int)time(NULL));
 				snprintf(temp_str, 20, "%f", temperature);
 				snprintf(humidity_str, 20, "%f", humidity);
+				snprintf(device_id, 20, "%s", getenv("DEVICE_ID"));
+				snprintf(accesskey, 20, "%s", getenv("ACCESSKEY"));
 
 				curl_global_init(CURL_GLOBAL_ALL);
 
@@ -99,13 +103,13 @@ void read_temp(void)
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "device_id",
-							 CURLFORM_COPYCONTENTS, getenv("DEVICE_ID"),
+							 CURLFORM_COPYCONTENTS, device_id,
 							 CURLFORM_END);
 
 				curl_formadd(&formpost,
 							 &lastptr,
 							 CURLFORM_COPYNAME, "access_key",
-							 CURLFORM_COPYCONTENTS, getenv("ACCESSKEY"),
+							 CURLFORM_COPYCONTENTS, accesskey,
 							 CURLFORM_END);
 
 				curl_formadd(&formpost,
@@ -189,7 +193,13 @@ int read_pir(void)
 			static const char buf[] = "Expect:";
 
 			char time_str[20];
+			char device_id[200];
+			char owner[200];
+			char accesskey[200];
 			snprintf(time_str, 20, "%d", (int)time(NULL));
+			snprintf(device_id, 20, "%s", getenv("DEVICE_ID"));
+			snprintf(owner, 20, "%s", getenv("TELEGRAM_USER"));
+			snprintf(accesskey, 20, "%s", getenv("ACCESSKEY"));
 
 			curl_global_init(CURL_GLOBAL_ALL);
 
@@ -204,19 +214,19 @@ int read_pir(void)
 			curl_formadd(&formpost,
 						 &lastptr,
 						 CURLFORM_COPYNAME, "owner",
-						 CURLFORM_COPYCONTENTS, getenv("TELEGRAM_USER"),
+						 CURLFORM_COPYCONTENTS, owner,
 						 CURLFORM_END);
 
 			curl_formadd(&formpost,
 						 &lastptr,
 						 CURLFORM_COPYNAME, "device_id",
-						 CURLFORM_COPYCONTENTS, getenv("DEVICE_ID"),
+						 CURLFORM_COPYCONTENTS, device_id,
 						 CURLFORM_END);
 
 			curl_formadd(&formpost,
 						 &lastptr,
 						 CURLFORM_COPYNAME, "access_key",
-						 CURLFORM_COPYCONTENTS, getenv("ACCESSKEY"),
+						 CURLFORM_COPYCONTENTS, accesskey,
 						 CURLFORM_END);
 
 			curl_formadd(&formpost,
