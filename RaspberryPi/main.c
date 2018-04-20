@@ -89,8 +89,8 @@ void read_temp(void)
 				snprintf(time_str, 20, "%d", (int)time(NULL));
 				snprintf(temp_str, 20, "%f", temperature);
 				snprintf(humidity_str, 20, "%f", humidity);
-				snprintf(device_id, 20, "%s", getenv("DEVICE_ID"));
-				snprintf(accesskey, 20, "%s", getenv("ACCESSKEY"));
+				snprintf(device_id, 200, "%s", getenv("DEVICE_ID"));
+				snprintf(accesskey, 200, "%s", getenv("ACCESSKEY"));
 
 				curl_global_init(CURL_GLOBAL_ALL);
 
@@ -197,9 +197,9 @@ int read_pir(void)
 			char owner[200];
 			char accesskey[200];
 			snprintf(time_str, 20, "%d", (int)time(NULL));
-			snprintf(device_id, 20, "%s", getenv("DEVICE_ID"));
-			snprintf(owner, 20, "%s", getenv("TELEGRAM_USER"));
-			snprintf(accesskey, 20, "%s", getenv("ACCESSKEY"));
+			snprintf(device_id, 200, "%s", getenv("DEVICE_ID"));
+			snprintf(owner, 200, "%s", getenv("TELEGRAM_USER"));
+			snprintf(accesskey, 200, "%s", getenv("ACCESSKEY"));
 
 			curl_global_init(CURL_GLOBAL_ALL);
 
