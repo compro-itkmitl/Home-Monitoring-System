@@ -98,6 +98,18 @@ void read_temp(void)
 
 				curl_formadd(&formpost,
 							 &lastptr,
+							 CURLFORM_COPYNAME, "device_id",
+							 CURLFORM_COPYCONTENTS, getenv("DEVICE_ID"),
+							 CURLFORM_END);
+
+				curl_formadd(&formpost,
+							 &lastptr,
+							 CURLFORM_COPYNAME, "access_key",
+							 CURLFORM_COPYCONTENTS, getenv("ACCESSKEY"),
+							 CURLFORM_END);
+
+				curl_formadd(&formpost,
+							 &lastptr,
 							 CURLFORM_COPYNAME, "temp",
 							 CURLFORM_COPYCONTENTS, temp_str,
 							 CURLFORM_END);
@@ -179,7 +191,6 @@ int read_pir(void)
 			char time_str[20];
 			snprintf(time_str, 20, "%d", (int)time(NULL));
 
-			printf("Process 2: Pass 1\n");
 			curl_global_init(CURL_GLOBAL_ALL);
 
 			/* Fill in the file upload field */
@@ -190,30 +201,41 @@ int read_pir(void)
 						 CURLFORM_CONTENTTYPE, "image/jpeg",
 						 CURLFORM_END);
 
-			printf("Process 2: Pass 2\n");
+			curl_formadd(&formpost,
+						 &lastptr,
+						 CURLFORM_COPYNAME, "owner",
+						 CURLFORM_COPYCONTENTS, getenv("TELEGRAM_USER"),
+						 CURLFORM_END);
+
+			curl_formadd(&formpost,
+						 &lastptr,
+						 CURLFORM_COPYNAME, "device_id",
+						 CURLFORM_COPYCONTENTS, getenv("DEVICE_ID"),
+						 CURLFORM_END);
+
+			curl_formadd(&formpost,
+						 &lastptr,
+						 CURLFORM_COPYNAME, "access_key",
+						 CURLFORM_COPYCONTENTS, getenv("ACCESSKEY"),
+						 CURLFORM_END);
+
 			curl_formadd(&formpost,
 						 &lastptr,
 						 CURLFORM_COPYNAME, "time",
 						 CURLFORM_COPYCONTENTS, time_str,
 						 CURLFORM_END);
 
-			printf("Process 2: Pass 3\n");
 			curl = curl_easy_init();
-			/* initialize custom header list (stating that Expect: 100-continue is not
-     wanted */
-			printf("Process 2: Pass 4\n");
+			/* initialize custom header list (stating that Expect: 100-continue is not wanted */
 			headerlist = curl_slist_append(headerlist, buf);
 			if (curl)
 			{
-				printf("Process 2: Pass 5\n");
 				/* what URL that receives this POST */
 				curl_easy_setopt(curl, CURLOPT_URL, "https://us-central1-compro-home-monitoring.cloudfunctions.net/motion");
 				curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
-				printf("Process 2: Pass 6\n");
 				curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
-				printf("Process 2: Pass 7\n");
 				/* Perform the request, res will get the return code */
 				res = curl_easy_perform(curl);
 				/* Check for errors */
