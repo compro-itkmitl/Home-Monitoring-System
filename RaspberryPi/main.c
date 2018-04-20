@@ -201,6 +201,8 @@ int read_pir(void)
 			snprintf(owner, 200, "%s", getenv("TELEGRAM_USER"));
 			snprintf(accesskey, 200, "%s", getenv("ACCESSKEY"));
 
+			printf("%s\n%s\n%s\n", device_id, owner, accesskey);
+
 			curl_global_init(CURL_GLOBAL_ALL);
 
 			/* Fill in the file upload field */
