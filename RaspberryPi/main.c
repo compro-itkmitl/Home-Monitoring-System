@@ -261,8 +261,6 @@ int read_pir(void)
 				/* free slist */
 				curl_slist_free_all(headerlist);
 
-				system("rm -f /tmp/motion.jpg");
-
 				printf("Process 2 : Command successfully run\n");
 			}
 			else
