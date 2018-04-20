@@ -1,6 +1,7 @@
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
+const util = require('util');
 
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 const functions = require('firebase-functions');
@@ -10,8 +11,9 @@ const admin = require('firebase-admin');
 
 const ServiceAccount = require('./service_account.json');
 
-// const formidable = require('formidable');
 const Busboy = require('busboy');
+
+const telegram = require('telegram-bot-api');
 
 // Initialize AdminSDK
 admin.initializeApp({
@@ -20,7 +22,7 @@ admin.initializeApp({
 });
 
 // Initialize Database
-const db = admin.database();
+const db = admin.firestore();
 
 // Initialize Express
 const express = require('express');
@@ -38,23 +40,47 @@ TempMonitor.post('/', (req, res) => {
   let formData = {};
 
   busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
-    console.log(val);
     formData[fieldname] = val;
   });
   busboy.on('finish', () => {
     let time = formData.time;
-    let temp = formData.temp;
-    let humidity = formData.humidity;
+    let temp = parseFloat(formData.temp);
+    let humidity = parseFloat(formData.humidity);
+    let deviceID = formData.device_id;
+    let accessKey = formData.access_key;
 
-    let TempDBRef = db.ref(`temp`);
-    let TempChildRef = TempDBRef.child(time);
-    TempChildRef.set({ value: parseFloat(temp) });
-
-    let HumidityRef = db.ref(`humidity`);
-    let HumiditypChildRef = HumidityRef.child(time);
-    HumiditypChildRef.set({ value: parseFloat(humidity) });
-
-    res.status(200).send('Success!\n');
+    db
+      .collection(deviceID)
+      .doc('info')
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          let data = doc.data();
+          if (accessKey !== data.access_key) {
+            res.send(401);
+          } else {
+            db
+              .collection(deviceID)
+              .doc(time)
+              .set({
+                temp: temp,
+                humidity: humidity
+              })
+              .then(() => {
+                res.status(200).send('Success!\n');
+              })
+              .catch((err) => {
+                res.send(500);
+              });
+          }
+        } else {
+          res.status(404);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.send(500);
+      });
   });
   busboy.end(req.rawBody);
 });
@@ -78,21 +104,62 @@ MotionMonitor.post('/', (req, res) => {
   let uploads = {};
 
   busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
-    let filepath = path.join(os.tmpdir(), fieldname);
+    let filepath = path.join(os.tmpdir(), fieldname + path.extname(filename));
     uploads[fieldname] = { file: filepath };
-    console.log(`Saving '${fieldname}' to ${filepath}`);
     file.pipe(fs.createWriteStream(filepath));
   });
 
   busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
-    console.log(val);
     formData[fieldname] = val;
   });
   busboy.on('finish', () => {
-    console.log(uploads);
     let time = formData.time;
+    let owner = parseInt(formData.owner);
+    let deviceID = formData.device_id;
+    let accessKey = formData.access_key;
+    let photo = uploads.photo.file;
+    console.log(photo);
+    console.log(formData);
+    console.log(owner);
+    db
+      .collection(deviceID)
+      .doc('info')
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          let data = doc.data();
+          if (accessKey !== data.access_key) {
+            res.send(401);
+          } else {
+            let api = new telegram({
+              token: functions.config().motion.telegram_apikey
+            });
 
-    res.status(200).send('Success!\n');
+            api
+              .sendPhoto({
+                chat_id: owner,
+                caption: 'Motion detected in yours house!',
+
+                // you can also send file_id here as string (as described in telegram bot api documentation)
+                photo: photo
+              })
+              .then((data) => {
+                console.log(util.inspect(data, false, null));
+                res.status(200).send('Success!\n');
+              })
+              .catch((err) => {
+                console.log(err);
+                res.status(500);
+              });
+          }
+        } else {
+          res.status(404);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        res.send(500);
+      });
   });
   busboy.end(req.rawBody);
 });
