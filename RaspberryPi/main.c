@@ -84,9 +84,13 @@ void read_temp(void)
 				char time_str[20];
 				char temp_str[20];
 				char humidity_str[20];
+				char device_id[200];
+				char accesskey[200];
 				snprintf(time_str, 20, "%d", (int)time(NULL));
 				snprintf(temp_str, 20, "%f", temperature);
 				snprintf(humidity_str, 20, "%f", humidity);
+				snprintf(device_id, 200, "%s", getenv("DEVICE_ID"));
+				snprintf(accesskey, 200, "%s", getenv("ACCESSKEY"));
 
 				curl_global_init(CURL_GLOBAL_ALL);
 
@@ -94,6 +98,18 @@ void read_temp(void)
 							 &lastptr,
 							 CURLFORM_COPYNAME, "time",
 							 CURLFORM_COPYCONTENTS, time_str,
+							 CURLFORM_END);
+
+				curl_formadd(&formpost,
+							 &lastptr,
+							 CURLFORM_COPYNAME, "device_id",
+							 CURLFORM_COPYCONTENTS, device_id,
+							 CURLFORM_END);
+
+				curl_formadd(&formpost,
+							 &lastptr,
+							 CURLFORM_COPYNAME, "access_key",
+							 CURLFORM_COPYCONTENTS, accesskey,
 							 CURLFORM_END);
 
 				curl_formadd(&formpost,
@@ -164,7 +180,7 @@ int read_pir(void)
 		{
 			printf("Process 2 : Detected!\n");
 
-			system("raspistill -w 1024 -h 768 -o /tmp/motion.jpg");
+			system("sudo raspistill -w 1024 -h 768 -o /tmp/motion.jpg");
 
 			printf("Process 2 : Command has started\n");
 
@@ -177,9 +193,14 @@ int read_pir(void)
 			static const char buf[] = "Expect:";
 
 			char time_str[20];
+			char device_id[200];
+			char owner[200];
+			char accesskey[200];
 			snprintf(time_str, 20, "%d", (int)time(NULL));
+			snprintf(device_id, 200, "%s", getenv("DEVICE_ID"));
+			snprintf(owner, 200, "%s", getenv("TELEGRAM_USER"));
+			snprintf(accesskey, 200, "%s", getenv("ACCESSKEY"));
 
-			printf("Process 2: Pass 1\n");
 			curl_global_init(CURL_GLOBAL_ALL);
 
 			/* Fill in the file upload field */
@@ -190,30 +211,41 @@ int read_pir(void)
 						 CURLFORM_CONTENTTYPE, "image/jpeg",
 						 CURLFORM_END);
 
-			printf("Process 2: Pass 2\n");
+			curl_formadd(&formpost,
+						 &lastptr,
+						 CURLFORM_COPYNAME, "owner",
+						 CURLFORM_COPYCONTENTS, owner,
+						 CURLFORM_END);
+
+			curl_formadd(&formpost,
+						 &lastptr,
+						 CURLFORM_COPYNAME, "device_id",
+						 CURLFORM_COPYCONTENTS, device_id,
+						 CURLFORM_END);
+
+			curl_formadd(&formpost,
+						 &lastptr,
+						 CURLFORM_COPYNAME, "access_key",
+						 CURLFORM_COPYCONTENTS, accesskey,
+						 CURLFORM_END);
+
 			curl_formadd(&formpost,
 						 &lastptr,
 						 CURLFORM_COPYNAME, "time",
 						 CURLFORM_COPYCONTENTS, time_str,
 						 CURLFORM_END);
 
-			printf("Process 2: Pass 3\n");
 			curl = curl_easy_init();
-			/* initialize custom header list (stating that Expect: 100-continue is not
-     wanted */
-			printf("Process 2: Pass 4\n");
+			/* initialize custom header list (stating that Expect: 100-continue is not wanted */
 			headerlist = curl_slist_append(headerlist, buf);
 			if (curl)
 			{
-				printf("Process 2: Pass 5\n");
 				/* what URL that receives this POST */
 				curl_easy_setopt(curl, CURLOPT_URL, "https://us-central1-compro-home-monitoring.cloudfunctions.net/motion");
 				curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
-				printf("Process 2: Pass 6\n");
 				curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
 
-				printf("Process 2: Pass 7\n");
 				/* Perform the request, res will get the return code */
 				res = curl_easy_perform(curl);
 				/* Check for errors */
@@ -228,8 +260,6 @@ int read_pir(void)
 				curl_formfree(formpost);
 				/* free slist */
 				curl_slist_free_all(headerlist);
-
-				system("rm /tmp/motion.jpg");
 
 				printf("Process 2 : Command successfully run\n");
 			}
