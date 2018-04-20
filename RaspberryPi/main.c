@@ -180,7 +180,7 @@ int read_pir(void)
 		{
 			printf("Process 2 : Detected!\n");
 
-			system("raspistill -w 1024 -h 768 -o /tmp/motion.jpg");
+			system("sudo raspistill -w 1024 -h 768 -o /tmp/motion.jpg");
 
 			printf("Process 2 : Command has started\n");
 
