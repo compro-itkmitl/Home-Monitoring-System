@@ -40,7 +40,6 @@ TempMonitor.post('/', (req, res) => {
   let formData = {};
 
   busboy.on('field', (fieldname, val, fieldnameTruncated, valTruncated, encoding, mimetype) => {
-    console.log(val);
     formData[fieldname] = val;
   });
   busboy.on('finish', () => {
@@ -50,13 +49,30 @@ TempMonitor.post('/', (req, res) => {
     let deviceID = formData.device_id;
     let accessKey = formData.access_key;
 
-    let info = db
+    db
       .collection(deviceID)
       .doc('info')
       .get()
       .then((doc) => {
         if (doc.exists) {
-          return doc.data();
+          let data = doc.data();
+          if (accessKey !== data.access_key) {
+            res.send(401);
+          } else {
+            db
+              .collection(deviceID)
+              .doc(time)
+              .set({
+                temp: temp,
+                humidity: humidity
+              })
+              .then(() => {
+                res.status(200).send('Success!\n');
+              })
+              .catch((err) => {
+                res.send(500);
+              });
+          }
         } else {
           res.status(404);
         }
@@ -65,24 +81,6 @@ TempMonitor.post('/', (req, res) => {
         console.log(err);
         res.send(500);
       });
-
-    if (accessKey !== info.access_key) {
-      return res.send(401);
-    } else {
-      db
-        .collection(deviceID)
-        .doc(time)
-        .set({
-          temp: temp,
-          humidity: humidity
-        })
-        .then(() => {
-          res.status(200).send('Success!\n');
-        })
-        .catch((err) => {
-          res.send(500);
-        });
-    }
   });
   busboy.end(req.rawBody);
 });
@@ -123,48 +121,45 @@ MotionMonitor.post('/', (req, res) => {
     console.log(photo);
     console.log(formData);
     console.log(owner);
-    // let info = db
-    //   .collection(deviceID)
-    //   .doc('info')
-    //   .get()
-    //   .then((doc) => {
-    //     if (doc.exists) {
-    //       return doc.data();
-    //     } else {
-    //       res.status(404);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     res.send(500);
-    //   });
+    db
+      .collection(deviceID)
+      .doc('info')
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          let data = doc.data();
+          if (accessKey !== data.access_key) {
+            res.send(401);
+          } else {
+            let api = new telegram({
+              token: functions.config().motion.telegram_apikey
+            });
 
-    // info = Promise.all(info);
-    // console.log(info);
-    // if (accessKey !== info.access_key) {
-    //   return res.send(401);
-    // } else {
-    let api = new telegram({
-      token: functions.config().motion.telegram_apikey
-    });
+            api
+              .sendPhoto({
+                chat_id: owner,
+                caption: 'Motion detected in yours house!',
 
-    api
-      .sendPhoto({
-        chat_id: owner,
-        caption: 'Motion detected in yours house!',
-
-        // you can also send file_id here as string (as described in telegram bot api documentation)
-        photo: photo
-      })
-      .then((data) => {
-        console.log(util.inspect(data, false, null));
-        res.status(200).send('Success!\n');
+                // you can also send file_id here as string (as described in telegram bot api documentation)
+                photo: photo
+              })
+              .then((data) => {
+                console.log(util.inspect(data, false, null));
+                res.status(200).send('Success!\n');
+              })
+              .catch((err) => {
+                console.log(err);
+                res.status(500);
+              });
+          }
+        } else {
+          res.status(404);
+        }
       })
       .catch((err) => {
         console.log(err);
-        res.status(500);
+        res.send(500);
       });
-    // }
   });
   busboy.end(req.rawBody);
 });
