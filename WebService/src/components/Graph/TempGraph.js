@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import axios from '../../axios-graph';
 import { Line } from 'react-chartjs-2';
 
-//ASSUME THAT DATA WAS FIXED
+import "../fire";
+import createContainer from "firestore-react";
+
+
 let data = {
-  labels: ['08:00AM', '08:30AM', '09:00AM', '09:30AM', '10:00AM', '10:30AM', '11:00AM', '11:30AM'],
-  datasets: [
-    {
-      label: 'Temperature',
-      data: [24, 25, 26, 27, 26, 25, 26, 25],
-      borderColor: '#009688',
-      fill: false
-    }
-  ]
+  labels: [],
+  datasets: []
 };
 
 const options = {
@@ -32,8 +27,8 @@ const options = {
           labelString: 'Value'
         },
         ticks: {
-          suggestedMin: 20,
-          suggestedMax: 30
+          suggestedMin: 26,
+          suggestedMax: 34
         }
       }
     ]
@@ -41,22 +36,42 @@ const options = {
 };
 
 class TempGraph extends Component {
-  //TODO: MAKE DATA UPDATE FROM DATABASE
-  componentDidMount() {
-    axios
-      .get('https://compro-home-monitoring.firebaseio.com/test-temp.json')
-      .then((response) => {
-        //DO IT HERE
-        console.log(response);
-      })
-      .catch((response) => {
-        console.log(response.data.errors);
-      });
-  }
+
+  getTemp() {
+    const list: any = [];
+    const list2: any = [];
+    let i = 0;
+    let mintimestamp = Math.floor(Date.now() / 1000) - 3600;
+    this.props.temp.snapshot.forEach((doc: any) => {
+      i++;
+      if (doc.id >= mintimestamp) {
+        list.push(doc.data().temp);
+        var d = new Date(i);
+        d.setUTCSeconds(doc.id);
+        list2.push(d.toLocaleTimeString('th-TH'));
+      }
+    });
+    data.labels = list2;
+    data.datasets = [ {
+      label: 'Temperature',
+      data: list,
+      borderColor: '#009688',
+      fill: false
+    }];
+  };
+
 
   render() {
-    return <Line data={data} options={options} />;
+    return (
+      <div>
+        {this.props.temp.loading ? "LOADING" : this.getTemp()} <Line data={data} options={options} />
+      </div>
+    );
   }
 }
 
-export default TempGraph;
+export default createContainer(TempGraph, (db: any) => {
+  return {
+    temp: db.collection("717a4e49-be9c-4088-9b06-c3d0ac06ba90")
+  };
+});

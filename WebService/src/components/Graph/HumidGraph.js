@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-import axios from '../../axios-graph';
 import { Line } from 'react-chartjs-2';
 
-//ASSUME THAT DATA WAS FIXED
+import "../fire";
+import createContainer from "firestore-react";
+
+
 let data = {
-  labels: ['08:00AM', '08:30AM', '09:00AM', '09:30AM', '10:00AM', '10:30AM', '11:00AM', '11:30AM'],
-  datasets: [
-    {
-      label: 'Humidity',
-      data: [59, 60, 62, 68, 62, 70, 65, 66],
-      borderColor: '#00BCD4',
-      fill: false
-    }
-  ]
+  labels: [],
+  datasets: []
 };
 
 const options = {
@@ -30,33 +25,49 @@ const options = {
         scaleLabel: {
           show: true,
           labelString: 'Value'
-        },
-        ticks: {
-          suggestedMin: 40,
-          suggestedMax: 80
         }
       }
     ]
   }
 };
 
-class HumidGraph extends Component {
-  //TODO: MAKE DATA UPDATE FROM DATABASE
-  componentDidMount() {
-    axios
-      .get('https://compro-home-monitoring.firebaseio.com/test-temp.json')
-      .then((response) => {
-        //DO IT HERE
-        console.log(response);
-      })
-      .catch((response) => {
-        console.log(response.data.errors);
-      });
-  }
+class HumidGraph extends Component<any, any> {
+
+  getHumid() {
+    const list: any = [];
+    const list2: any = [];
+    let i = 0;
+    let mintimestamp = Math.floor(Date.now() / 1000) - 3600;
+    this.props.humid.snapshot.forEach((doc: any) => {
+      i++;
+      if (doc.id >= mintimestamp) {
+        list.push(doc.data().humidity);
+        var d = new Date(i);
+        d.setUTCSeconds(doc.id);
+        list2.push(d.toLocaleTimeString('th-TH'));
+      }
+    });
+    data.labels = list2;
+    data.datasets = [ {
+      label: 'Humidity',
+      data: list,
+      borderColor: '#00BCD4',
+      fill: false
+    }];
+  };
 
   render() {
-    return <Line data={data} options={options} />;
-  }
-}
+    return (
+      <div>
+        {this.props.humid.loading ? "LOADING" : this.getHumid()} <Line data={data} options={options} />
+      </div>
+    );
+  };
+};
 
-export default HumidGraph;
+
+export default createContainer(HumidGraph, (db: any) => {
+  return {
+    humid: db.collection("717a4e49-be9c-4088-9b06-c3d0ac06ba90")
+  };
+});
