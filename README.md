@@ -1,3 +1,4 @@
+![](/Resources/banner.png)
 # Home Monitoring System
 
 # ![](/Resources/Home.png) Introduction
