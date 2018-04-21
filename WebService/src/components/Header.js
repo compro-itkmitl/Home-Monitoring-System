@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Logo from './img/logo.png';
-import {Link} from "react-router-dom";
-import firebase, { auth, provider } from './fire';
+import { Link } from 'react-router-dom';
+import { auth, provider } from './fire';
 
 class Header extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -12,28 +11,26 @@ class Header extends Component {
       username: '',
       items: [],
       user: null
-    }
+    };
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
   }
 
   logout() {
-    auth.signOut()
-      .then(() => {
-        this.setState({
-          user: null
-        });
+    auth.signOut().then(() => {
+      this.setState({
+        user: null
       });
+    });
   }
 
   login() {
-    auth.signInWithPopup(provider)
-      .then((result) => {
-        const user2 = result.user;
-        this.setState({
-          user2
-        });
+    auth.signInWithPopup(provider).then((result) => {
+      const user2 = result.user;
+      this.setState({
+        user2
       });
+    });
   }
 
   componentDidMount() {
@@ -41,7 +38,8 @@ class Header extends Component {
       if (user) {
         this.setState({ user });
       }
-    }) };
+    });
+  }
 
   render() {
     return (
@@ -64,17 +62,18 @@ class Header extends Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link to='/' className="nav-link">Dashboard <span className="sr-only">(current)</span></Link>
+              <Link to="/" className="nav-link">
+                Dashboard <span className="sr-only">(current)</span>
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to='/about-us' className="nav-link">About Us</Link>
+              <Link to="/about-us" className="nav-link">
+                About Us
+              </Link>
             </li>
           </ul>
-          <button
-            className="btnSignIn"
-            onClick={this.state.user ? this.logout : this.login}
-          >
-            {this.state.user ? "Log out" : "Log in"}
+          <button className="btnSignIn" onClick={this.state.user ? this.logout : this.login}>
+            {this.state.user ? 'Log out' : 'Log in'}
           </button>
         </div>
       </nav>
