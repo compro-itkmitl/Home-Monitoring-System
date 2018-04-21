@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from './img/logo.png';
+import {Link} from "react-router-dom";
 
 const Header = () => {
   return (
@@ -22,16 +23,18 @@ const Header = () => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <a className="nav-link" href="/">
-              Dashboard <span className="sr-only">(current)</span>
-            </a>
+            <Link to='/' className="nav-link">Dashboard <span className="sr-only">(current)</span></Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/about-us">
-              About Us
-            </a>
+            <Link to='/about-us' className="nav-link">About Us</Link>
           </li>
         </ul>
+        <Link to='/login'>
+          <button
+            className="btnSignIn">
+            Log in
+          </button>
+        </Link>
       </div>
     </nav>
   );

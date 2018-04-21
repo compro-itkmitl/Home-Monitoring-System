@@ -9,13 +9,17 @@ class Dashboard extends Component {
     return (
       <BrowserRouter>
         <div className="row dashboard">
-          <div className="col-lg-6 col-sm-12 temp">
-            <h3>อุณหภูมิ</h3>
-            <TempGraph />
+          <div className="col-lg-6 col-sm-12">
+            <section className="temp">
+              <h3>อุณหภูมิ</h3>
+              <TempGraph />
+            </section>
           </div>
-          <div className="col-lg-6 col-sm-12 humid">
-            <h3>ความชื้นสัมพัทธ์</h3>
-            <HumidGraph />
+          <div className="col-lg-6 col-sm-12">
+            <section className="humid">
+              <h3>ความชื้นสัมพัทธ์</h3>
+              <HumidGraph />
+            </section>
           </div>
         </div>
       </BrowserRouter>

@@ -9,6 +9,13 @@ p {
   font-weight: 300;
 }
 
+.btnSignIn {
+  padding: 0.5em 2em;
+  background: #FFF;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
 
 /* NAV */
 
@@ -28,6 +35,10 @@ p {
 
 .navbar-light .navbar-toggler {
   background: #FFF;
+}
+
+.navbar-nav > li {
+  margin: 0 1em;
 }
 
 
@@ -69,6 +80,9 @@ main {
 .humid {
   border: 1px solid #00BCD4;
 }
+.temp, .humid {
+  border-radius: 4px;
+}
 .humid h3 {
   background: #00BCD4;
   color: #FFF;
@@ -76,15 +90,15 @@ main {
 }
 
 .dashboard > div {
-  padding: 0;
-
+  padding: 0 0.2em;
 }
 
 /* ABOUT US */
 
 .our-project, .members {
-  padding-bottom: 3em; 
+  padding: 5em 0;
 }
+
 .members div {
   text-align: center;
 }
