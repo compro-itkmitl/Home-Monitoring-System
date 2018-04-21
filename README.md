@@ -1,5 +1,4 @@
 ![](/Resources/banner.png)
-# Home Monitoring System
 
 # ![](/Resources/Home.png) Introduction
 สวัสดีครับ วันนี้กลุ่ม Home Monitoring System ได้จัดทำระบบเก็บข้อมูลต่าง ๆ ในบ้านขึ้นมา รวมถึงระบบเฝ้าระวังอย่าง Motion Detector ที่จะสามารถจับตาดูความเรียบร้อยภายในบ้านได้ หากมีความเคลื่อนไหวก็จะสามารถถ่ายภาพและแจ้งเตือนผ่าน Telegram ได้อีกด้วย ~
@@ -39,8 +38,23 @@ make
 ```
 
 # ![](/Resources/Dashboard.png) Interfaces
-โปรแกรมของเรา จะสามารถรันได้บน Raspbian ที่ลง WiringPi แล้วเท่านั้น เนื่องจากเป็นโปรแกรมที่ออกแบบมาเพื่อทำงานบน Raspberry Pi เท่านั้น
+### Telegram Bot
+![](/Resources/TelegramBot.jpg)
 
+
+# ![](/Resources/Tools.png) Tools
+* [Raspberry Pi](https://www.raspberrypi.org/)
+* PIR Motion Sensor
+* DHT22 Temperature & Humidity Sensor
+* [Firebase](https://firebase.google.com) Hosting, Authenticator and Cloud Function
+* [React.js](https://reactjs.org/) for Web Platform Frontend
+* [libcurl for C](https://curl.haxx.se/)
+* [WiringPi](http://wiringpi.com/)
+
+# ![](/Resources/References.png) References
+* [DHT22 Python Library](https://github.com/adafruit/Adafruit_CircuitPython_DHT) use for reference
+* [CURL Library](https://curl.haxx.se/libcurl/c/)
+* [Stackoverflow](https://stackoverflow.com) Thank you for debug reference~
 
 # ![](/Resources/Team.png) Team Members
 |  |ชื่อ|นามสกุล|GitHub Username|รหัสนักศึกษา|
