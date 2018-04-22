@@ -1,7 +1,7 @@
 ![](/Resources/banner.png)
 
 # ![](/Resources/Home.png) Introduction
-สวัสดีครับ วันนี้กลุ่ม Home Monitoring System ได้จัดทำระบบเก็บข้อมูลต่าง ๆ ในบ้านขึ้นมา รวมถึงระบบเฝ้าระวังอย่าง Motion Detector ที่จะสามารถจับตาดูความเรียบร้อยภายในบ้านได้ หากมีความเคลื่อนไหวก็จะสามารถถ่ายภาพและแจ้งเตือนผ่าน Telegram ได้อีกด้วย ~  
+สวัสดีครับ วันนี้กลุ่ม Home Monitoring System ได้จัดทำระบบเก็บข้อมูลต่าง ๆ ในบ้านขึ้นมา รวมถึงระบบเฝ้าระวังอย่าง Motion Detector ที่จะสามารถจับตาดูความเรียบร้อยภายในบ้านได้ หากมีความเคลื่อนไหวก็จะสามารถถ่ายภาพและแจ้งเตือนผ่าน Telegram ได้อีกด้วย ~
 
 
 # ![](/Resources/Help.png) How to use
@@ -10,16 +10,16 @@
 ![](/Resources/First_time_loadup.png)
 
 # ![](/Resources/Setting.png) Configurations
-โปรแกรมของเรา จะสามารถรันได้บน Raspbian ที่ลง WiringPi แล้วเท่านั้น เนื่องจากเป็นโปรแกรมที่ออกแบบมาเพื่อทำงานบน Raspberry Pi เท่านั้น  
-โดย วิธีการใช้งานนั้นมีดังนี้  
+โปรแกรมของเรา จะสามารถรันได้บน Raspbian ที่ลง WiringPi แล้วเท่านั้น เนื่องจากเป็นโปรแกรมที่ออกแบบมาเพื่อทำงานบน Raspberry Pi เท่านั้น
+โดย วิธีการใช้งานนั้นมีดังนี้
 ### 1. ทำการ Clone Repository ลงมา~
 ```
 git clone https://github.com/compro-itkmitl/Home-Monitoring-System.git
-```  
+```
 ### 2. เข้าไปใน Directory ของโปรแกรม
 ```
-cd Home-Monitoring-System 
-```  
+cd Home-Monitoring-System
+```
 ### 3. จากนั้นเข้าไปใน Directory RaspberryPi
 ```
 cd RaspberryPi
@@ -27,8 +27,8 @@ cd RaspberryPi
 ### 4. ทำการ Setup Environment สำหรับรันโปรแกรม
 ```
 export DEVICE_ID="example" TELEGRAM_USER="1234" ACCESSKEY="key"
-```  
-* DEVICE_ID คือ ID ที่ใช้บอกว่าเป็น device ตัวไหน  
+```
+* DEVICE_ID คือ ID ที่ใช้บอกว่าเป็น device ตัวไหน
 * TELEGRAM_USER คือ Chat ID ของ Telegram ที่ต้องการให้แจ้งเตือน
 * ACCESSKEY คือ Key ที่ใช้ในการ Authentication เพื่อนำข้อมูลเข้าสู่ระบบ
 
@@ -36,6 +36,8 @@ export DEVICE_ID="example" TELEGRAM_USER="1234" ACCESSKEY="key"
 ```
 make
 ```
+
+[](/Resources/Guideline.png)
 
 # ![](/Resources/Dashboard.png) Interfaces
 ### Telegram Bot Interface
