@@ -11,26 +11,25 @@ p {
 
 .btnSignIn {
   padding: 0.5em 2em;
-  background: #FFF;
+  background: #fff;
   border: none;
   border-radius: 7px;
   cursor: pointer;
 }
 
 form {
-  margin: 2em 0.5em!important;
+  margin: 2em 0.5em !important;
 }
 
 /* NAV */
 
-
 .navbar {
   padding: 0.5em 5em;
-  background: #607D8B;
+  background: #607d8b;
 }
 
 .navbar-light .navbar-nav .nav-link {
-  color: #FFF;
+  color: #fff;
 }
 
 .main-logo {
@@ -38,13 +37,12 @@ form {
 }
 
 .navbar-light .navbar-toggler {
-  background: #FFF;
+  background: #fff;
 }
 
 .navbar-nav > li {
   margin: 0 1em;
 }
-
 
 /* SECTION */
 
@@ -58,38 +56,39 @@ main {
 }
 
 .hero {
-  background: #90A4AE;
-  color: #FFF;
+  background: #90a4ae;
+  color: #fff;
 }
 
 .dashboard {
   padding: 2em 6em;
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
   .dashboard {
     padding: 1em 2em;
   }
 }
 
 /* DASHBOARD */
-.temp {    
+.temp {
   border: 1px solid #009688;
 }
 .temp h3 {
   background: #009688;
-  color: #FFF;
+  color: #fff;
   padding: 0.5em 0.5em;
 }
 .humid {
-  border: 1px solid #00BCD4;
+  border: 1px solid #00bcd4;
 }
-.temp, .humid {
+.temp,
+.humid {
   border-radius: 4px;
 }
 .humid h3 {
-  background: #00BCD4;
-  color: #FFF;
+  background: #00bcd4;
+  color: #fff;
   padding: 0.5em 0.5em;
 }
 
@@ -99,7 +98,8 @@ main {
 
 /* ABOUT US */
 
-.our-project, .members {
+.our-project,
+.members {
   padding: 5em 0;
 }
 
@@ -129,8 +129,8 @@ h2.Head {
   max-width: 500px;
   padding: 1em;
   margin: 2em auto;
-  border: 1px solid #EEE;
-  box-shadow: 1px 1px 20px #EEE;
+  border: 1px solid #eee;
+  box-shadow: 1px 1px 20px #eee;
 }
 
 .deviceCard p {
@@ -144,7 +144,7 @@ h2.Head {
 .deviceIcon img {
   margin: 0.5em 1em 0 0.5em;
   padding: 1em;
-  border: 6px solid #607D8B;
+  border: 6px solid #607d8b;
   border-radius: 50px;
 }
 
@@ -157,8 +157,8 @@ h2.Head {
 }
 
 .btnDeviceAdd {
-  background: #607D8B;
-  color: #FFF;
+  background: #607d8b;
+  color: #fff;
   width: 60px;
   height: 60px;
   font-size: 2em;
@@ -167,18 +167,18 @@ h2.Head {
   position: absolute;
   left: 70%;
   cursor: pointer;
-  box-shadow: 1px 1px 20px #AAA;
+  box-shadow: 1px 1px 20px #aaa;
 }
 
 .newDevice {
   padding: 3em;
 }
 
-.newDevice input[type="text"] {
+.newDevice input[type='text'] {
   width: 100%;
 }
 
-.newDevice input[type="submit"] {
+.newDevice input[type='submit'] {
   width: 100%;
   background: none;
   border: none;

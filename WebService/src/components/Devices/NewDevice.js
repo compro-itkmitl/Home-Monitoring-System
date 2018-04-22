@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import {Col, Container, Row} from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
 
 class NewDevice extends Component {
   render() {
