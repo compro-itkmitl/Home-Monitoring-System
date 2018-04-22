@@ -38,7 +38,7 @@ make
 ```
 
 # ![](/Resources/Dashboard.png) Interfaces
-### Telegram Bot
+### Telegram Bot Interface
 ![](/Resources/TelegramBot.jpg)
 
 
