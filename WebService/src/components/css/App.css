@@ -17,6 +17,10 @@ p {
   cursor: pointer;
 }
 
+form {
+  margin: 2em 0.5em!important;
+}
+
 /* NAV */
 
 
@@ -110,4 +114,88 @@ main {
 
 .members p {
   padding-top: 0.5em;
+}
+
+/* Devices */
+.deviceList {
+  padding: 3em;
+}
+
+h2.Head {
+  text-align: center;
+}
+
+.deviceCard {
+  max-width: 500px;
+  padding: 1em;
+  margin: 2em auto;
+  border: 1px solid #EEE;
+  box-shadow: 1px 1px 20px #EEE;
+}
+
+.deviceCard p {
+  margin-bottom: 0.2em;
+}
+
+.deviceIcon {
+  text-align: center;
+}
+
+.deviceIcon img {
+  margin: 0.5em 1em 0 0.5em;
+  padding: 1em;
+  border: 6px solid #607D8B;
+  border-radius: 50px;
+}
+
+.btnDeviceGo {
+  background: none;
+  border: none;
+  float: right;
+  cursor: pointer;
+  font-weight: 200;
+}
+
+.btnDeviceAdd {
+  background: #607D8B;
+  color: #FFF;
+  width: 60px;
+  height: 60px;
+  font-size: 2em;
+  border: none;
+  border-radius: 50px;
+  position: absolute;
+  left: 70%;
+  cursor: pointer;
+  box-shadow: 1px 1px 20px #AAA;
+}
+
+.newDevice {
+  padding: 3em;
+}
+
+.newDevice input[type="text"] {
+  width: 100%;
+}
+
+.newDevice input[type="submit"] {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: center;
+  height: 40px;
+}
+
+.deviceInfo {
+  padding: 3em 0 1em;
+}
+
+.deviceInfo h2 {
+  font-weight: 200;
+}
+
+h6.subHead {
+  color: #888;
+  text-align: center;
+  font-weight: 100;
 }

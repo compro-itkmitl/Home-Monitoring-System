@@ -5,6 +5,8 @@ import './components/css/App.css';
 import Dashboard from './Dashboard';
 import AboutUs from './components/AboutUs/AboutUs';
 import LogIn from './components/LogIn/LogIn';
+import DevicesList from './components/Devices/DevicesList';
+import NewDevice from './components/Devices/NewDevice';
 import Header from './components/Header';
 import Home from './components/Home';
 
@@ -14,6 +16,8 @@ const App = () => (
     <Switch>
       <Route path="/" exact component={Home} />
       <Route path="/device/:id" exact component={Dashboard} />
+      <Route path="/devices" exact component={DevicesList} />
+      <Route path="/new/" exact component={NewDevice} />
       <Route path="/login" exact component={LogIn} />
       <Route path="/about-us" component={AboutUs} />
     </Switch>
