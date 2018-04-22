@@ -1,4 +1,5 @@
 const LOGIN = 'LOGIN';
+const LOGOUT = 'LOGOUT';
 
 const initialState = {
   login: false,
@@ -13,6 +14,12 @@ export default (state = initialState, action) => {
         user: action.data,
         login: true
       };
+    case LOGOUT:
+      return {
+        ...state,
+        user: null,
+        login: false
+      };
     default:
       return state;
   }
@@ -21,4 +28,8 @@ export default (state = initialState, action) => {
 export const setLogin = (data) => ({
   type: LOGIN,
   data
+});
+
+export const setLogout = () => ({
+  type: LOGOUT
 });
