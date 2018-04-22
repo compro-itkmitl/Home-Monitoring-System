@@ -37,7 +37,7 @@ export DEVICE_ID="example" TELEGRAM_USER="1234" ACCESSKEY="key"
 make
 ```
 
-[](/Resources/guideline.png)
+![](/Resources/guideline.png)
 
 # ![](/Resources/Dashboard.png) Interfaces
 ### Telegram Bot Interface
