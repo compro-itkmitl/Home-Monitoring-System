@@ -1,8 +1,8 @@
 import firebase from 'firebase';
-require("firebase/firestore");
+require('firebase/firestore');
 
 // Initialize Firebase
-var config = {
+const config = {
   apiKey: 'AIzaSyAOtbJCLpszeWSJi_l9YyR8Xltp5j-IcTc',
   authDomain: 'compro-home-monitoring.firebaseapp.com',
   databaseURL: 'https://compro-home-monitoring.firebaseio.com',
@@ -16,3 +16,4 @@ firebase.initializeApp(config);
 export default firebase;
 export const provider = new firebase.auth.FacebookAuthProvider();
 export const auth = firebase.auth();
+export const db = firebase.firestore().settings({ timestampsInSnapshots: true });
