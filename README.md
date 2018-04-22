@@ -44,6 +44,15 @@ make
 ### Telegram Bot Interface
 ![](/Resources/TelegramBot.jpg)
 
+### Web Interface
+### Devices List
+![](/Resources/DeviceList.png)
+### Add New Device
+![](/Resources/AddDevice.png)
+### Realtime Graph
+![](/Resources/Graph.png)
+
+
 
 # ![](/Resources/Setting.png) Build Status
 
@@ -57,6 +66,7 @@ make
 * DHT22 Temperature & Humidity Sensor
 * [Firebase](https://firebase.google.com) Hosting, Authenticator and Cloud Function
 * [React.js](https://reactjs.org/) for Web Platform Frontend
+* [Redux.js](https://redux.js.org/) for React.js State Management
 * [libcurl for C](https://curl.haxx.se/)
 * [WiringPi](http://wiringpi.com/)
 
