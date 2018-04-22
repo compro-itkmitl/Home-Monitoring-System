@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 
-import "../fire";
-import createContainer from "firestore-react";
-
+import '../fire';
+import createContainer from 'firestore-react';
 
 let data = {
   labels: [],
@@ -31,14 +30,13 @@ const options = {
   }
 };
 
-class HumidGraph extends Component<any, any> {
-
+class HumidGraph extends Component {
   getHumid() {
-    const list: any = [];
-    const list2: any = [];
+    const list = [];
+    const list2 = [];
     let i = 0;
     let mintimestamp = Math.floor(Date.now() / 1000) - 3600;
-    this.props.humid.snapshot.forEach((doc: any) => {
+    this.props.humid.snapshot.forEach((doc) => {
       i++;
       if (doc.id >= mintimestamp) {
         list.push(doc.data().humidity);
@@ -48,26 +46,27 @@ class HumidGraph extends Component<any, any> {
       }
     });
     data.labels = list2;
-    data.datasets = [ {
-      label: 'Humidity',
-      data: list,
-      borderColor: '#00BCD4',
-      fill: false
-    }];
-  };
+    data.datasets = [
+      {
+        label: 'Humidity',
+        data: list,
+        borderColor: '#00BCD4',
+        fill: false
+      }
+    ];
+  }
 
   render() {
     return (
       <div>
-        {this.props.humid.loading ? "LOADING" : this.getHumid()} <Line data={data} options={options} />
+        {this.props.humid.loading ? 'LOADING' : this.getHumid()} <Line data={data} options={options} />
       </div>
     );
-  };
-};
+  }
+}
 
-
-export default createContainer(HumidGraph, (db: any) => {
+export default createContainer(HumidGraph, (db) => {
   return {
-    humid: db.collection("717a4e49-be9c-4088-9b06-c3d0ac06ba90")
+    humid: db.collection('717a4e49-be9c-4088-9b06-c3d0ac06ba90')
   };
 });

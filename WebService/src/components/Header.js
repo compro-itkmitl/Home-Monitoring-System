@@ -1,84 +1,72 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Logo from './img/logo.png';
 import { Link } from 'react-router-dom';
 import { auth, provider } from './fire';
+import { connect } from 'react-redux';
+import { setLogin, setLogout } from '../redux';
+import { lifecycle, compose } from 'recompose';
 
-class Header extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentItem: '',
-      username: '',
-      items: [],
-      user: null
-    };
-    this.login = this.login.bind(this);
-    this.logout = this.logout.bind(this);
-  }
+const enhance = compose(
+  connect((state) => state, { setLogin, setLogout }),
+  lifecycle({
+    componentDidMount() {
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          this.props.setLogin(user);
+        }
+      });
+    }
+  })
+);
 
-  logout() {
+const Header = (props) => {
+  const logout = () => {
     auth.signOut().then(() => {
-      this.setState({
-        user: null
-      });
+      props.setLogout();
     });
-  }
+  };
 
-  login() {
+  const login = () => {
     auth.signInWithPopup(provider).then((result) => {
-      const user2 = result.user;
-      this.setState({
-        user2
-      });
+      props.setLogin(result.user);
     });
-  }
+  };
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light">
+      <a className="navbar-brand" href="/">
+        <img className="main-logo" src={Logo} alt="logo" />
+      </a>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon" />
+      </button>
 
-  componentDidMount() {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({ user });
-      }
-    });
-  }
-
-  render() {
-    return (
-      <nav className="navbar navbar-expand-lg navbar-light">
-        <a className="navbar-brand" href="/">
-          <img className="main-logo" src={Logo} alt="logo" />
-        </a>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/about-us" className="nav-link">
+              About Us
+            </Link>
+          </li>
+        </ul>
+        <button className="btnSignIn" onClick={props.login ? () => logout() : () => login()}>
+          {props.login ? 'Log out' : 'Log in'}
         </button>
+      </div>
+    </nav>
+  );
+};
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to="/" className="nav-link">
-                Dashboard <span className="sr-only">(current)</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/about-us" className="nav-link">
-                About Us
-              </Link>
-            </li>
-          </ul>
-          <button className="btnSignIn" onClick={this.state.user ? this.logout : this.login}>
-            {this.state.user ? 'Log out' : 'Log in'}
-          </button>
-        </div>
-      </nav>
-    );
-  }
-}
-
-export default Header;
+export default enhance(Header);

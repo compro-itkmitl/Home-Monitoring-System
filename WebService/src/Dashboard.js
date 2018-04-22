@@ -12,13 +12,13 @@ class Dashboard extends Component {
           <div className="col-lg-6 col-sm-12">
             <section className="temp">
               <h3>อุณหภูมิ</h3>
-              <TempGraph />
+              <TempGraph id={this.props.match.params.id} />
             </section>
           </div>
           <div className="col-lg-6 col-sm-12">
             <section className="humid">
               <h3>ความชื้นสัมพัทธ์</h3>
-              <HumidGraph />
+              <HumidGraph id={this.props.match.params.id} />
             </section>
           </div>
         </div>
