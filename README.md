@@ -1,7 +1,7 @@
 ![](/Resources/banner.png)
 
 # ![](/Resources/Home.png) Introduction
-สวัสดีครับ วันนี้กลุ่ม Home Monitoring System ได้จัดทำระบบเก็บข้อมูลต่าง ๆ ในบ้านขึ้นมา รวมถึงระบบเฝ้าระวังอย่าง Motion Detector ที่จะสามารถจับตาดูความเรียบร้อยภายในบ้านได้ หากมีความเคลื่อนไหวก็จะสามารถถ่ายภาพและแจ้งเตือนผ่าน Telegram ได้อีกด้วย ~
+สวัสดีครับ วันนี้กลุ่ม Home Monitoring System ได้จัดทำระบบเก็บข้อมูลต่าง ๆ ในบ้านขึ้นมา รวมถึงระบบเฝ้าระวังอย่าง Motion Detector ที่จะสามารถจับตาดูความเรียบร้อยภายในบ้านได้ หากมีความเคลื่อนไหวก็จะสามารถถ่ายภาพและแจ้งเตือนผ่าน Telegram ได้อีกด้วย ~  
 
 
 # ![](/Resources/Help.png) How to use
@@ -41,6 +41,12 @@ make
 ### Telegram Bot Interface
 ![](/Resources/TelegramBot.jpg)
 
+
+# ![](/Resources/Setting.png) Build Status
+
+|Master|Web|
+|:--:|:--:|
+|[![CircleCI](https://circleci.com/gh/wiput1999/ComPro2017-Project/tree/master.svg?style=svg)](https://circleci.com/gh/wiput1999/ComPro2017-Project/tree/master)|[![CircleCI](https://circleci.com/gh/wiput1999/ComPro2017-Project/tree/web.svg?style=svg)](https://circleci.com/gh/wiput1999/ComPro2017-Project/tree/web)|
 
 # ![](/Resources/Tools.png) Tools
 * [Raspberry Pi](https://www.raspberrypi.org/)
