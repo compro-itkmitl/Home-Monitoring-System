@@ -83,7 +83,7 @@ make
 |![https://www.facebook.com/810Teams](/Resources/810Teams.jpg)|Teerapat|Kraisrisirikul|[@810Teams](https://github.com/810Teams)|60070183|
 
 # ![](/Resources/Team.png) Assistant Teachers
-|ผศ. ดร. กิติ์สุชาติ พสุภา|ผศ. ดร. ปานวิทย์ ธุวะนุติ|
+|ผศ. ดร. กิติ์สุชาต พสุภา|ผศ. ดร. ปานวิทย์ ธุวะนุติ|
 |:-:|:-:|
 |![](/Resources/AjOng.jpg)|![](/Resources/AjPanwit.jpg)|
 
