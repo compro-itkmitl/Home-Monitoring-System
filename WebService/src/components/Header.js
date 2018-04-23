@@ -33,9 +33,9 @@ const Header = (props) => {
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
-      <a className="navbar-brand" href="/">
+      <Link className="navbar-brand" to="/">
         <img className="main-logo" src={Logo} alt="logo" />
-      </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"
@@ -55,6 +55,15 @@ const Header = (props) => {
               Home
             </Link>
           </li>
+          {props.login ? (
+            <li className="nav-item">
+              <Link to="/devices" className="nav-link">
+                Device List
+              </Link>
+            </li>
+          ) : (
+            ''
+          )}
           <li className="nav-item">
             <Link to="/about-us" className="nav-link">
               About Us

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
-import { Col, Container, Row } from 'reactstrap';
+import { BrowserRouter, Link, withRouter } from 'react-router-dom';
+import { Col, Container, Row, Button } from 'reactstrap';
 import Logo from '../img/rp3.png';
 
 class DeviceList extends Component {
@@ -20,7 +20,7 @@ class DeviceList extends Component {
               </Col>
               <Col lg={9} sm={12}>
                 <p>
-                  <strong>NAME:</strong> RASPBERRY PI3
+                  <strong>NAME:</strong> RASPBERRY PI 3
                 </p>
                 <p>
                   <strong>LOCATION:</strong> HOME
@@ -36,7 +36,7 @@ class DeviceList extends Component {
             </Row>
           </section>
           <Link to="/new">
-            <button className="btnDeviceAdd">+</button>
+            <Button className="btnDeviceAdd">+</Button>
           </Link>
         </Container>
       </BrowserRouter>
@@ -44,4 +44,4 @@ class DeviceList extends Component {
   }
 }
 
-export default DeviceList;
+export default withRouter(DeviceList);

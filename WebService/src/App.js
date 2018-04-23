@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+
 import './components/css/App.css';
 
 import Dashboard from './Dashboard';
@@ -15,9 +16,9 @@ const App = () => (
     <Header title="Home Monitoring" />
     <Switch>
       <Route path="/" exact component={Home} />
+      <Route path="/new" exact component={NewDevice} />
       <Route path="/device/:id" exact component={Dashboard} />
       <Route path="/devices" exact component={DevicesList} />
-      <Route path="/new/" exact component={NewDevice} />
       <Route path="/login" exact component={LogIn} />
       <Route path="/about-us" component={AboutUs} />
     </Switch>
