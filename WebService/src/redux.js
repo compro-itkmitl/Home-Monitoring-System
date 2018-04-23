@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
     case LOGOUT:
       return {
         ...state,
-        user: null,
+        user: {},
         login: false
       };
     default:
