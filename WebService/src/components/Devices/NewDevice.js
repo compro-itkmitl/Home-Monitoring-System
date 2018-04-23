@@ -7,7 +7,7 @@ const NewDevice = () => (
     <Container className="newDevice">
       <Row>
         <Col sm={12}>
-          <h2 className="Head">Add new device</h2>
+          <h2 className="Head">Add New Device</h2>
         </Col>
       </Row>
       <section className="deviceCard">
@@ -17,7 +17,7 @@ const NewDevice = () => (
               <FormGroup>
                 <Row>
                   <Col lg={4} sm={12}>
-                    <Label for="newName">Device name</Label>
+                    <Label for="newName">Device Name</Label>
                   </Col>
                   <Col lg={8} sm={12}>
                     <Input id="newName" type="text" />
@@ -27,7 +27,7 @@ const NewDevice = () => (
               <FormGroup>
                 <Row>
                   <Col lg={4} sm={12}>
-                    <Label for="newLocation">Device location</Label>
+                    <Label for="newLocation">Device Location</Label>
                   </Col>
                   <Col lg={8} sm={12}>
                     <Input id="newLocation" type="text" />
@@ -37,7 +37,7 @@ const NewDevice = () => (
               <FormGroup>
                 <Row>
                   <Col lg={4} sm={12}>
-                    <Label for="newKey">Device key</Label>
+                    <Label for="newKey">Device Type</Label>
                   </Col>
                   <Col lg={8} sm={12}>
                     <Input id="newKey" type="text" />
@@ -47,14 +47,10 @@ const NewDevice = () => (
               <FormGroup>
                 <Row>
                   <Col lg={4} sm={12}>
-                    <Label for="newOwner">Device owner</Label>
-                  </Col>
-                  <Col lg={8} sm={12}>
-                    <Input id="newOwner" type="text" />
+                    <Button>Add</Button>
                   </Col>
                 </Row>
               </FormGroup>
-              <Button>Add</Button>
             </Form>
           </Col>
         </Row>

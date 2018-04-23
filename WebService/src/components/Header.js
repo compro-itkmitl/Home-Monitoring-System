@@ -31,6 +31,7 @@ const Header = (props) => {
       props.setLogin(result.user);
     });
   };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <Link className="navbar-brand" to="/">

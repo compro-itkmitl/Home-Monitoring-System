@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Col, Container, Row, Button } from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
 import Logo from '../img/rp3.png';
 
 class DeviceList extends Component {
@@ -30,12 +30,14 @@ class DeviceList extends Component {
               <p>
                 <strong>OWNER:</strong> WIPUT
               </p>
-              <button className="btnDeviceGo">View Monitor ></button>
+              <Link to="/view" className="btn btnDeviceGo">
+                View Monitor
+              </Link>
             </Col>
           </Row>
         </section>
-        <Link to="/new">
-          <Button className="btnDeviceAdd">+</Button>
+        <Link to="/new" className="btn btnDeviceAdd">
+          +
         </Link>
       </Container>
     );
