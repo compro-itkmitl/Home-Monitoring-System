@@ -19,16 +19,16 @@ class DeviceList extends Component {
             </Col>
             <Col lg={9} sm={12}>
               <p>
-                <strong>NAME:</strong> RASPBERRY PI 3
+                <strong>NAME:</strong> Raspberry Pi 3
               </p>
               <p>
-                <strong>LOCATION:</strong> HOME
+                <strong>LOCATION:</strong> Home
               </p>
               <p>
-                <strong>ACCESS KEY: </strong>[...]
+                <strong>ACCESS KEY: </strong> wp1OcvlMLCLOd5lZeeVxmRB0uWqygDTU
               </p>
               <p>
-                <strong>OWNER:</strong> WIPUT
+                <strong>OWNER:</strong> Wiput Pootong
               </p>
               <Link to="/view" className="btn btnDeviceGo">
                 View Monitor

@@ -20,7 +20,7 @@ const NewDevice = () => (
                     <Label for="newName">Device Name</Label>
                   </Col>
                   <Col lg={8} sm={12}>
-                    <Input id="newName" type="text" />
+                    <Input id="newName" name="name" type="text" />
                   </Col>
                 </Row>
               </FormGroup>
@@ -30,7 +30,7 @@ const NewDevice = () => (
                     <Label for="newLocation">Device Location</Label>
                   </Col>
                   <Col lg={8} sm={12}>
-                    <Input id="newLocation" type="text" />
+                    <Input id="newLocation" name="location" type="text" />
                   </Col>
                 </Row>
               </FormGroup>
@@ -40,14 +40,17 @@ const NewDevice = () => (
                     <Label for="newKey">Device Type</Label>
                   </Col>
                   <Col lg={8} sm={12}>
-                    <Input id="newKey" type="text" />
+                    <Input type="select" name="type" id="newKey">
+                      <option value="rpi">Raspberry Pi</option>
+                      <option value="nodemcu">NodeMCU</option>
+                    </Input>
                   </Col>
                 </Row>
               </FormGroup>
               <FormGroup>
                 <Row>
                   <Col lg={4} sm={12}>
-                    <Button>Add</Button>
+                    <Button color="success">Add</Button>
                   </Col>
                 </Row>
               </FormGroup>
