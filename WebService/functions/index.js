@@ -50,8 +50,8 @@ TempMonitor.post('/', (req, res) => {
     let accessKey = formData.access_key;
 
     db
-      .collection(deviceID)
-      .doc('info')
+      .collection('devices')
+      .doc(deviceID)
       .get()
       .then((doc) => {
         if (doc.exists) {
@@ -60,7 +60,9 @@ TempMonitor.post('/', (req, res) => {
             res.send(401);
           } else {
             db
-              .collection(deviceID)
+              .collection('devices')
+              .doc(deviceID)
+              .collection('temp')
               .doc(time)
               .set({
                 temp: temp,
