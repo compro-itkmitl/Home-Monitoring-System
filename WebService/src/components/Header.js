@@ -51,11 +51,6 @@ const Header = (props) => {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to="/" className="nav-link">
-              Home
-            </Link>
-          </li>
           {props.login ? (
             <li className="nav-item">
               <Link to="/devices" className="nav-link">
@@ -63,7 +58,11 @@ const Header = (props) => {
               </Link>
             </li>
           ) : (
-            ''
+            <li className="nav-item">
+              <Link to="/" className="nav-link">
+                Home
+              </Link>
+            </li>
           )}
           <li className="nav-item">
             <Link to="/about-us" className="nav-link">
