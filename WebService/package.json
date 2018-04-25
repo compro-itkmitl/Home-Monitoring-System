@@ -25,7 +25,8 @@
     "react-scripts": "1.1.1",
     "reactstrap": "^5.0.0-beta.3",
     "recompose": "^0.27.0",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+    "redux-persist": "^5.9.1"
   },
   "peerDependencies": {
     "chart.js": "^2.7"
@@ -34,7 +35,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "firebase deploy --only hosting"
   },
   "devDependencies": {
     "redux-devtools": "^3.4.1"
