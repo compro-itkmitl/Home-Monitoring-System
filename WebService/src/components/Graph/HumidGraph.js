@@ -67,6 +67,9 @@ class HumidGraph extends Component {
 
 export default createContainer(HumidGraph, (db) => {
   return {
-    humid: db.collection('717a4e49-be9c-4088-9b06-c3d0ac06ba90')
+    humid: db
+      .collection('devices')
+      .doc('717a4e49-be9c-4088-9b06-c3d0ac06ba90')
+      .collection('temp')
   };
 });

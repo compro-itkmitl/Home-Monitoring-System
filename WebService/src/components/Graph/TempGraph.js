@@ -71,6 +71,9 @@ class TempGraph extends Component {
 
 export default createContainer(TempGraph, (db) => {
   return {
-    temp: db.collection('717a4e49-be9c-4088-9b06-c3d0ac06ba90')
+    temp: db
+      .collection('devices')
+      .doc('717a4e49-be9c-4088-9b06-c3d0ac06ba90')
+      .collection('temp')
   };
 });

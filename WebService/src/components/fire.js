@@ -13,7 +13,11 @@ const config = {
 
 firebase.initializeApp(config);
 
+let firestore = firebase.firestore();
+
+firestore.settings({ timestampsInSnapshots: true });
+
 export default firebase;
 export const provider = new firebase.auth.FacebookAuthProvider();
 export const auth = firebase.auth();
-export const db = firebase.firestore().settings({ timestampsInSnapshots: true });
+export const db = firestore;
