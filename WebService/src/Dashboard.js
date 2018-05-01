@@ -14,28 +14,28 @@ const Dashboard = () => (
   <BrowserRouter>
     <div>
       <Container className="deviceInfo">
+        <Col lg={12}>
+          <h2 className="Head"> Device Information </h2>
+          <h6 className="subHead"> REAL-TIME </h6>
+        </Col>
+      </Container>
+
+      <Container className="dashboard" fluid>
         <Row>
-          <Col lg={12}>
-            <h2 className="Head"> Device information </h2>
-            <h6 className="subHead"> REAL-TIME </h6>
+          <Col lg={6} sm={12}>
+            <section className="temp">
+              <h3>อุณหภูมิ</h3>
+              <TempGraph />
+            </section>
+          </Col>
+          <Col lg={6} sm={12}>
+            <section className="humid">
+              <h3>ความชื้นสัมพัทธ์</h3>
+              <HumidGraph />
+            </section>
           </Col>
         </Row>
       </Container>
-
-      <Row className="dashboard">
-        <div className="col-lg-6 col-sm-12">
-          <section className="temp">
-            <h3>อุณหภูมิ</h3>
-            <TempGraph />
-          </section>
-        </div>
-        <div className="col-lg-6 col-sm-12">
-          <section className="humid">
-            <h3>ความชื้นสัมพัทธ์</h3>
-            <HumidGraph />
-          </section>
-        </div>
-      </Row>
     </div>
   </BrowserRouter>
 );
