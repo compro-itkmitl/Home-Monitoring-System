@@ -3,6 +3,7 @@ import { Line } from 'react-chartjs-2';
 
 import '../fire';
 import createContainer from 'firestore-react';
+import Loading from './Loading';
 
 let data = {
   labels: [],
@@ -63,7 +64,7 @@ class TempGraph extends Component {
   render() {
     return (
       <div>
-        {this.props.temp.loading ? 'LOADING' : this.getTemp()} <Line data={data} options={options} />
+        {this.props.temp.loading ? <Loading /> : this.getTemp()} <Line data={data} options={options} />
       </div>
     );
   }

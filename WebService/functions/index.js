@@ -115,8 +115,8 @@ MotionMonitor.post('/', (req, res) => {
     formData[fieldname] = val;
   });
   busboy.on('finish', () => {
-    let time = formData.time;
-    let owner = parseInt(formData.owner);
+    // let time = formData.time;
+    let owner = parseInt(formData.owner, 10);
     let deviceID = formData.device_id;
     let accessKey = formData.access_key;
     let photo = uploads.photo.file;

@@ -3,6 +3,7 @@ import { Line } from 'react-chartjs-2';
 
 import '../fire';
 import createContainer from 'firestore-react';
+import Loading from './Loading';
 
 let data = {
   labels: [],
@@ -59,7 +60,7 @@ class HumidGraph extends Component {
   render() {
     return (
       <div>
-        {this.props.humid.loading ? 'LOADING' : this.getHumid()} <Line data={data} options={options} />
+        {this.props.humid.loading ? <Loading /> : this.getHumid()} <Line data={data} options={options} />
       </div>
     );
   }
